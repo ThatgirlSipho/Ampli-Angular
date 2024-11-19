@@ -1,0 +1,551 @@
+/* Stepper Header */
+.mat-step-header {
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+/* Form Field Margins */
+mat-form-field {
+  margin-bottom: 16px;
+}
+
+/* Section Headings */
+h2, h3 {
+  margin-bottom: 16px;
+  color: #3f51b5;
+}
+
+/* Form Container */
+form {
+  margin: 16px;
+}
+
+/* Buttons */
+button.mat-raised-button {
+  margin: 8px;
+}
+
+.mat-mdc-form-field {
+  margin-top: 16px;
+}
+
+.stepper-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.basicLegalEntityDetails {
+  width: 100%;
+}
+
+.mat-horizontal-stepper-header-container {
+  flex-wrap: nowrap;
+  overflow-x: auto;
+}
+
+.stepper-controls {
+  margin-top: 16px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 800px;
+}
+
+.bordered-table {
+  border: 1px solid #000; /* Black border */
+  border-collapse: collapse; /* Optional: Combines borders of cells and table */
+  width: 100%;
+}
+
+.bordered-table th, .bordered-table td {
+  border: 1px solid #000; /* Adds border to table cells */
+  padding: 8px; /* Adds padding inside table cells */
+}
+
+.form-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.labels {
+  width: 250px;
+  text-align: left;
+}
+
+.basicLegalEntityDetails {
+  flex: 1;
+}
+
+/* .form-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 10px; /* Adjust the gap as needed */
+  /* align-items: center;
+}
+
+.form-row { */
+  /* display: contents; Allows children to follow grid layout of parent */
+/* }
+
+.basicLegalEntityDetails {
+  width: 100%;
+} */
+
+.labels{
+  font-weight: bold;
+}
+
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px; /* Optional: Add some space above the buttons */
+}
+
+.back-button {
+  margin-right: 10px; /* Adjust space between buttons */
+}
+
+.next-button {
+  margin-left: 10px; /* Adjust space between buttons */
+  text-align: right;
+  right: 20px;
+}
+
+.back-btn {
+  background-color: blue;
+  color: white; /* Ensure text is readable on the blue background */
+  width: 25%;
+}
+
+.next-btn {
+  background-color: yellow;
+  color: black; /* Ensure text is readable on the yellow background */
+  width: 25%;
+}
+
+/* File upload box styling */
+.file-upload-wrapper {
+  display: flex;
+  padding: 20px;
+}
+
+.checklist-container {
+  /* flex: 1; */
+  padding-right: 20px;
+  border-right: 1px solid #ccc;
+}
+
+.checklist-container h3 {
+  margin-bottom: 10px;
+}
+
+.checklist-container ul {
+  list-style: none;
+  padding: 0;
+}
+
+.checklist-container li {
+  margin-bottom: 10px;
+}
+
+.file-upload-container {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px;
+  border: 2px dashed #5f64b1;
+  position: relative;
+  overflow: auto; /* Enable scrolling if content exceeds height */
+}
+
+.drag-drop-area {
+  padding: 20px;
+  text-align: center;
+  font-size: 18px;
+  color: #050a4d;
+}
+
+.file-upload-container.dragover .drag-drop-area {
+  background-color: #f0f0f0;
+  border-color: #1a107a;
+  color: white;
+}
+
+button {
+  margin-right: 10px;
+}
+
+.button-container {
+  margin-top: auto;
+  padding-bottom: 20px;
+}
+
+mat-progress-bar {
+  margin-top: 10px;
+  width: 100%;
+}
+
+/* master user table styling */
+.bordered-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #ccc;
+}
+
+.bordered-table th, .bordered-table td {
+  border: 1px solid #ccc;
+  padding: 8px;
+  text-align: left;
+}
+
+.bordered-table th {
+  background-color: #f2f2f2;
+}
+
+.bordered-table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.bordered-table select,
+.bordered-table input {
+  width: 100%;
+  padding: 8px;
+  box-sizing: border-box;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.bordered-table select {
+  appearance: none; /* Remove default appearance for select */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow icon */
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  background-size: 16px;
+  cursor: pointer;
+}
+
+.bordered-table select:focus,
+.bordered-table input:focus {
+  outline: none;
+  border-color: #1976d2; /* Example focus color */
+}
+
+@media (max-width: 600px) {
+  .bordered-table th, .bordered-table td {
+    padding: 6px;
+    font-size: 12px;
+  }
+}
+
+.create-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: yellow;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.exit-btn {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: rgb(10, 31, 88);
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  width: 11%;
+}
+
+
+
+
+.upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.document-description {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.file-upload {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress {
+  width: 100px;
+  height: 10px;
+  background-color: #f3f3f3;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #4caf50;
+}
+
+.drag-drop-area {
+  margin-top: 20px;
+  padding: 20px;
+  border: 2px dashed #cccccc;
+  text-align: center;
+  transition: background-color 0.3s;
+}
+
+.drag-drop-area.drag-over {
+  background-color: #f0f0f0;
+}
+.button-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.button-container button {
+  margin: 0;
+}
+
+.basicLegalEntityDetails input:disabled,
+.basicLegalEntityDetails mat-select[disabled] {
+color: #000; /* Set text color to black */
+background-color: #f5f5f5; /* Set background color to light grey to indicate disabled state */
+cursor: not-allowed; /* Change cursor to indicate that the field is disabled */
+}
+
+/* Adjust font weight for better visibility */
+.basicLegalEntityDetails input:disabled,
+.basicLegalEntityDetails mat-select[disabled] {
+font-weight: normal; /* Ensure font weight is not too light */}
+
+.button-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.button-group .row {
+  display: flex;
+  justify-content: space-between;
+}
+
+.button-group button {
+  flex: 1;
+  margin: 5px;
+}
+
+
+.action-btn {
+  width: 100px; /* Adjust width as needed */
+  padding: 8px 16px; /* Adjust padding for button size */
+  text-align: center;
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #020127;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+.navbar h1 {
+  margin: 0;
+}
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  margin-right: 10px; 
+}
+
+.icon-button img {
+  width: 40px; /* Adjust the width as per your design */
+  height: 40px; /* Adjust the height as per your design */
+  display: block; /* Ensures no extra space is taken */
+}
+
+/* Styles for the back arrow and notification buttons */
+.back-btn, .notification-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  height:50px;
+  
+}
+
+.page-background {
+  background-image: url('src/assets/Dasboard_Home.png');
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+
+.styled-buttons-container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 5px; /* Adjust as needed */
+  margin-bottom: 5px; /* Adjust as needed */
+}
+
+.styled-button {
+  background-color: #020127;
+  color: white;
+  margin-left: 10px; /* Space between the buttons */
+  padding: 6px 12px; /* Slim button styling */
+}
+
+
+.view-link {
+color: blue;
+text-decoration: underline;
+cursor: pointer;
+margin-left: 10px;
+}
+
+.view-link:hover {
+text-decoration: none;
+color: #0056b3;
+}
+
+.submitted-text{
+margin-top: 10px;
+color: gray;
+
+}
+
+.page-description {
+background-color: #f7f7f7;
+border-left: 4px solid #191970;
+padding: 15px;
+margin-bottom: 20px;
+border-radius: 4px;
+}
+
+.page-description p {
+font-family: 'Arial', sans-serif;
+font-size: 16px;
+color: #333;
+line-height: 1.6;
+margin: 0;
+}
+
+
+@media (max-width: 768px) {
+.page-description {
+  padding: 10px;
+}
+
+.page-description p {
+  font-size: 14px;
+}
+}
+
+
+/* Container for the entire upload section */
+.upload-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 5px;
+}
+
+/* Styling for each document section */
+.document-section {
+  margin-bottom: 20px;
+  padding: 15px;
+  background-color: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Table styles for document details */
+.document-table, .submitted-document-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 10px;
+}
+
+.document-table th, .submitted-document-table th {
+  background-color: #f2f2f2;
+  color: #333;
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+}
+
+.document-table td, .submitted-document-table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+/* Styling for the document description */
+.document-description {
+  font-weight: bold;
+  font-size: 14px;
+  padding: 10px 0;
+}
+
+/* Link to view documents */
+.view-link {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.view-link:hover {
+  text-decoration: underline;
+}
+
+/* Smaller dropdown within table cells */
+.small-dropdown {
+  width: 100%;
+}
+
+
+
+/* Icon button inside table cells */
+.mat-icon-button {
+  margin-left: 5px;
+}

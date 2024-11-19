@@ -1,0 +1,12 @@
+<button class="back-btn" routerLink="/secondapplicant">&#8592;</button>
+
+<div class="helper-icon" (click)="showHelperMessage()">ℹ️</div>
+
+<div class="applications-list">
+    <div class="card" *ngFor="let application of submittedApplications" routerLink="/view-applicant/application">
+      <h3>{{ application.name }}</h3>
+      <p>{{ application.description }}</p>
+      <button class="view-button" (click)="goToProductSchedule()">Sign Product Schedule</button>
+    </div>
+</div>
+  

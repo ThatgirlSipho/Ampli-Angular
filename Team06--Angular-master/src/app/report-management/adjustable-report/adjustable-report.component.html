@@ -1,0 +1,36 @@
+    <mat-toolbar >
+        <span>Adjustable Report</span>
+   </mat-toolbar>
+
+   <div>
+    <h2>Number of Clients filtered by Date Joined</h2>
+    <label for="startDateFilter">Start Date:</label>
+    <input type="date" id="startDateFilter" [(ngModel)]="startDateFilter" (change)="filterClients()">
+    
+    <label for="endDateFilter">End Date:</label>
+    <input type="date" id="endDateFilter" [(ngModel)]="endDateFilter" (change)="filterClients()">
+    
+    <button (click)="clearFilter()">Clear Filter</button>
+    
+    <table>
+      <thead>
+        <tr>
+          <th>Client ID</th>
+          <th>Client Name</th>
+          <th>Date Joined</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of filteredClients">
+          <td>{{ client.clientId }}</td>
+          <td>{{ client.fullName }}</td>
+          <td>{{ client.dateJoined | date }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  
+  
+  <div class="button-container">
+    <button class="view-button" (click)="generatePDF()">Download PDF</button>
+  </div>

@@ -1,0 +1,56 @@
+.page-background {
+  background-image: url('src/assets/Login..png');
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.login-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}
+
+.box {
+  width: 100%;
+  max-width: 400px; /* Maximum width for the card */
+}
+
+.full-width {
+  width: 100%;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+mat-card {
+  padding: 20px;
+}
+
+.back-button-container {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  z-index: 1000; /* Ensure it's above other content if necessary */
+}
+
+button.mat-icon-button {
+  background-color: #1976d2; /* Blue color */
+  color: white; /* Text color */
+  border-radius: 50%; /* Ensures it's circular */
+  padding: 8px; /* Adjust as needed */
+  font-size: 24px; /* Adjust icon size */
+}
+
+button.mat-icon-button:hover {
+  background-color: #1565c0; /* Darker shade on hover */
+}
+
+

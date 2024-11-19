@@ -1,0 +1,29 @@
+<div class="document-list">
+  <h2>Resume your applications here</h2>
+  <table class="document-table">
+    <thead>
+      <tr>
+        <th>Application ID</th>
+        <th>Legal Entity Type</th>
+        <th>Company Name</th>
+        <th>Click here to resume</th>
+        <th>Click here to delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let application of applications">
+        <td>{{ application.applicationId }}</td>
+        <td>
+          {{ legalEntityTypesMap[application.legalEntityTypeId].description || 'Unknown' }}
+        </td>
+        <td>{{ application.legalEntityTradingName }}</td>
+        <td>
+          <button class="edit-button" (click)="resumeApplication(application.applicationId)">Resume</button>
+        </td>
+        <td>
+          <button class="edit-button" (click)="deleteApplication(application.applicationId)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

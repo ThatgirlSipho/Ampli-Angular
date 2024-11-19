@@ -1,0 +1,21 @@
+    <mat-toolbar >
+        <span>List Of Employees</span>
+   </mat-toolbar>
+
+
+   <div class="employee-report-container" *ngIf="groupedEmployees">
+    <h2>Employee Report</h2>
+    <div *ngFor="let role of (groupedEmployees | keyvalue)">
+      <h3>{{ role.key }}:</h3>
+      <ul>
+        <li *ngFor="let name of role.value">{{ name }}</li>
+      </ul>
+      <p>{{ role.key }} Subtotal: {{ subtotals[role.key] }}</p>
+    </div>
+    <h2>Grand Total: {{ grandTotal }}</h2>
+  </div>
+
+  <div class="button-container">
+    <button class="view-button" (click)="generatePDF()">Download PDF</button>
+  </div>
+

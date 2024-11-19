@@ -1,0 +1,65 @@
+<div class="navbar">
+  <button class="back-btn" (click)="goBack()">&#8592;</button>
+  <h1>Update Profile</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;" />
+    </button>
+    <button class="icon-button"  [routerLink]="'/home'">
+      <img src="assets/help.png" alt="Help Icon" />
+    </button>
+  </div>
+</div>
+  
+
+<!-- Background image -->
+<div class="page-background"></div>
+
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()" class="form-container">
+  <div class="form-group">
+    <label for="titleId">Title</label>
+    <select id="titleId" formControlName="titleId" class="form-control">
+      <option *ngFor="let title of titles" [value]="title.titleId">{{ title.description }}</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="name">Name</label>
+    <input id="name" formControlName="name" type="text" class="form-control" placeholder="Enter Name" />
+  </div>
+
+  <div class="form-group">
+    <label for="surname">Surname</label>
+    <input id="surname" formControlName="surname" type="text" class="form-control" placeholder="Enter Surname" />
+  </div>
+
+  <div class="form-group">
+    <label for="email">Email</label>
+    <input id="email" formControlName="email" type="email" class="form-control" placeholder="Enter Email" />
+  </div>
+
+  <div *ngIf="isClient" class="form-group">
+    <label for="businessName">Business Name</label>
+    <input id="businessName" formControlName="businessName" type="text" class="form-control" placeholder="Enter Business Name" />
+  </div>
+
+  <div class="form-group">
+    <label for="cellNumber">Cell Number</label>
+    <input id="cellNumber" formControlName="cellNumber" type="tel" class="form-control" placeholder="Enter Cell Number" />
+    <div *ngIf="cellNumber?.invalid && (cellNumber?.dirty || cellNumber?.touched)" class="text-danger">
+      <div *ngIf="cellNumber?.errors?.['pattern']" class="error-message">Cell Number must contain only numbers.</div>
+    </div>
+  </div>
+
+  
+
+ <!--  <div *ngIf="!isClient" class="form-group">
+    <label for="profilePic">Profile Picture</label>
+    <input id="profilePic" formControlName="profilePic" type="text" class="form-control" placeholder="Enter Profile Picture URL" />
+  </div> -->
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="button" class="btn btn-secondary" (click)="goBack()">Cancel</button>
+  </div>
+</form>

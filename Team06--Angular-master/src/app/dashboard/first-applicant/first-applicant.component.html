@@ -1,0 +1,45 @@
+<!-- dashboard.component.html -->
+
+<!-- Navigation bar -->
+<div class="navbar">
+  <button class="back-btn" [routerLink]="'/home'">&#8592;</button>
+  <h1>Dashboard</h1>
+  <div class="icon-buttons">
+    <button mat-icon-button (click)="openGuide()">
+      <mat-icon>picture_as_pdf</mat-icon>
+    </button>
+    <button mat-icon-button (click)="logout()">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!-- Background image -->
+<div class="page-background"></div>
+
+
+<!-- Page content -->
+<div class="container">
+<!-- Profile block -->
+<app-profile></app-profile>
+
+
+  <!-- Application blocks -->
+  <div class="application-column">
+    <!-- Application block -->
+    <div class="application-block card">
+      <mat-icon>description</mat-icon>
+      <h2>Application</h2>
+      <p>Start a new, resume an application or view an application.</p>
+      <button class="view-button" routerLink="/secondapplicant">Open</button>
+    </div>
+
+    <!-- Consultant details -->
+    <div class="application-block card">
+      <mat-icon>supervisor_account</mat-icon>
+      <h2>Consultant Details</h2>
+      <p>To view Consultant details go here.</p>
+      <button class="view-button" routerLink="/view-consultant">View</button>
+    </div>
+  </div>
+</div>

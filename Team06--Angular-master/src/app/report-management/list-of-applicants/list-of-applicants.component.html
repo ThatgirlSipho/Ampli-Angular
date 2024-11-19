@@ -1,0 +1,39 @@
+    <mat-toolbar >
+        <span>List of Applicants</span>
+   </mat-toolbar>
+
+
+   <h2>List of Applicants Registered</h2>
+
+   <div class="table-container">
+    <table>
+      <thead>
+        <tr>
+          <th>#</th> <!-- New column for index -->
+          <th>Title</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Email</th>
+          <th>Cell Number</th>
+          <th>Business Name</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let client of clients; let i = index">
+          <td>{{ i + 1 }}</td>
+          <td>{{ client.title.description || 'No Title' }}</td> 
+          <td>{{ client.name }}</td>
+          <td>{{ client.surname }}</td>
+          <td>{{ client.email }}</td>
+          <td>{{ client.cellNumber }}</td>
+          <td>{{ client.businessName }}</td>
+        </tr>
+      </tbody>
+      
+    </table>
+  </div>
+  
+  <div class="button-container">
+    <button class="view-button" (click)="generatePDF()">Download PDF</button>
+  </div>
+  

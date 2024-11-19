@@ -1,0 +1,255 @@
+.mat-mdc-form-field {
+    margin-top: 16px;
+  }
+
+  .stepper-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .basicLegalEntityDetails {
+    width: 100%;
+  }
+  
+  .mat-horizontal-stepper-header-container {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+  
+  .stepper-controls {
+    margin-top: 16px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+  }
+
+  .bordered-table {
+    border: 1px solid #000; /* Black border */
+    border-collapse: collapse; /* Optional: Combines borders of cells and table */
+    width: 100%;
+  }
+  
+  .bordered-table th, .bordered-table td {
+    border: 1px solid #000; /* Adds border to table cells */
+    padding: 8px; /* Adds padding inside table cells */
+  }
+
+  .form-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .labels {
+    width: 250px;
+    text-align: left;
+  }
+  
+  .basicLegalEntityDetails {
+    flex: 1;
+  }
+  
+  /* .form-container {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 10px; /* Adjust the gap as needed */
+    /* align-items: center;
+  }
+  
+  .form-row { */
+    /* display: contents; Allows children to follow grid layout of parent */
+  /* }
+  
+  .basicLegalEntityDetails {
+    width: 100%;
+  } */
+  
+  .labels{
+    font-weight: bold;
+  }
+
+
+  .button-container {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px; /* Optional: Add some space above the buttons */
+  }
+  
+  .back-button {
+    margin-right: 10px; /* Adjust space between buttons */
+  }
+  
+  .next-button {
+    margin-left: 10px; /* Adjust space between buttons */
+    text-align: right;
+    right: 20px;
+  }
+  
+  .back-btn {
+    background-color: blue;
+    color: white; /* Ensure text is readable on the blue background */
+    width: 25%;
+  }
+  
+  .next-btn {
+    background-color: yellow;
+    color: black; /* Ensure text is readable on the yellow background */
+    width: 25%;
+  }
+  
+  /* File upload box styling */
+  .file-upload-wrapper {
+    display: flex;
+    padding: 20px;
+  }
+  
+  .checklist-container {
+    /* flex: 1; */
+    padding-right: 20px;
+    border-right: 1px solid #ccc;
+  }
+  
+  .checklist-container h3 {
+    margin-bottom: 10px;
+  }
+  
+  .checklist-container ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .checklist-container li {
+    margin-bottom: 10px;
+  }
+  
+  .file-upload-container {
+    flex: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border: 2px dashed #5f64b1;
+    position: relative;
+    overflow: auto; /* Enable scrolling if content exceeds height */
+  }
+  
+  .drag-drop-area {
+    padding: 20px;
+    text-align: center;
+    font-size: 18px;
+    color: #050a4d;
+  }
+  
+  .file-upload-container.dragover .drag-drop-area {
+    background-color: #f0f0f0;
+    border-color: #1a107a;
+    color: white;
+  }
+  
+  button {
+    margin-right: 10px;
+  }
+  
+  .button-container {
+    margin-top: auto;
+    padding-bottom: 20px;
+  }
+  
+  mat-progress-bar {
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  /* master user table styling */
+  .bordered-table {
+    width: 100%;
+    border-collapse: collapse;
+    border: 1px solid #ccc;
+  }
+  
+  .bordered-table th, .bordered-table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .bordered-table th {
+    background-color: #f2f2f2;
+  }
+  
+  .bordered-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  
+  .bordered-table select,
+  .bordered-table input {
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .bordered-table select {
+    appearance: none; /* Remove default appearance for select */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%23333" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/><path d="M0 0h24v24H0z" fill="none"/></svg>'); /* Custom arrow icon */
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    background-size: 16px;
+    cursor: pointer;
+  }
+  
+  .bordered-table select:focus,
+  .bordered-table input:focus {
+    outline: none;
+    border-color: #1976d2; /* Example focus color */
+  }
+  
+  @media (max-width: 600px) {
+    .bordered-table th, .bordered-table td {
+      padding: 6px;
+      font-size: 12px;
+    }
+  }
+
+  .create-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: yellow;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+
+  
+  .exit-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    margin: 10px 0;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: rgb(10, 31, 88);
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    width: 11%;
+  }
+  

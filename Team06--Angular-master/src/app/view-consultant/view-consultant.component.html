@@ -1,0 +1,31 @@
+<div class="navbar">
+  <button class="back-btn" (click)="goBack()">&#8592;</button>
+  <h1>View Consultant</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;" />
+    </button>
+  </div>
+</div>
+  
+
+<div class="page-background"></div>
+
+<div class="consultant-card">
+    <div class="profile-picture">
+      <img *ngIf="consultant.profilePic" 
+    [src]="'data:image/jpeg;base64,' + consultant.profilePic" 
+    alt="Profile Picture" >
+   
+<img *ngIf="!consultant.profilePic" 
+    src="assets/profile.jpg" 
+    alt="Default Profile Picture" 
+   >
+    </div>
+    <div class="consultant-info">
+      <h2>{{ consultant.fullName || 'Not Available'}}</h2>
+      <p>{{ consultant.email || 'Not Available' }}</p>
+      <p>{{ consultant.cellNumber || 'Not Available'}}</p>
+    </div>
+  </div>
+  

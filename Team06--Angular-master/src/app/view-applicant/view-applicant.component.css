@@ -1,0 +1,78 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #020127;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  
+}
+
+.navbar h1 {
+  margin: 0;
+}
+
+/* Styles for the back arrow and notification buttons */
+.back-btn, .notification-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+ 
+}
+
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  margin-right: 10px; 
+}
+
+.icon-button img {
+  width: 40px; /* Adjust the width as per your design */
+  height: 40px; /* Adjust the height as per your design */
+  display: block; /* Ensures no extra space is taken */
+}
+
+
+
+
+
+  .page-background {
+    background-image: url('src/assets/Dasboard_Home.png');
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  .button-group {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+
+  .applicant-table-container {
+    margin: 20px;
+    margin-top: 50px;
+  }
+  
+
+  table {
+    width: 100%;
+
+  }
+  
+  .mat-header-cell {
+    font-weight: bold;
+  }
+  
+  .mat-cell, .mat-header-cell {
+    padding: 16px;
+  }

@@ -1,0 +1,58 @@
+/* Background image */
+.page-background {
+    background-image: url('src/assets/Login..png');
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+  
+  .login-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full viewport height */
+  }
+  
+  .box {
+    width: 100%;
+    max-width: 400px; /* Maximum width for the card */
+    padding: 20px;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+  
+  .btn-block {
+    width: 100%;
+    margin-top: 20px;
+  }
+  
+  mat-card {
+    background: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  
+  
+  mat-card-title {
+    font-size: 1.25rem;
+  }
+  
+  mat-form-field {
+    margin-bottom: 20px;
+  }
+  
+  mat-form-field .mat-form-field-infix {
+    padding: 10px; /* Add padding inside the form field */
+  }
+  
+  mat-error {
+    font-size: 0.75rem;
+  }
+  

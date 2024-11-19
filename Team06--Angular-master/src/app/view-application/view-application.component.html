@@ -1,0 +1,34 @@
+<!-- view-application.component.html -->
+
+<div class="navbar">
+    <button class="back-btn" routerLink="/consultant">&#8592;</button>
+    <h1>Application Details</h1>
+</div>
+
+<div class="comment-section card">
+  <h2>Comments</h2>
+  <textarea [(ngModel)]="comment" placeholder="Add a comment"></textarea>
+  <button class="submit-btn" (click)="submitComment()">Submit Comment</button>
+  <!-- <button class="view-button" routerLink="/verify-documents">View uploaded documents</button> -->
+  <ul class="comment-list">
+    <li *ngFor="let comment of comments">{{ comment }}</li>
+  </ul>
+</div>
+
+
+
+<div id="myModal" class="modal" [ngClass]="{'show': isModalOpen}">
+    <div class="modal-content">
+      <span class="close" (click)="closeModal()">&times;</span>
+      <h1>Select Documents</h1>
+      <div>
+        <!-- <div *ngFor="let item of items" class="checkbox-item">
+          <input type="checkbox" [(ngModel)]="item.checked"> {{item.name}}
+        </div> -->
+      </div>
+      <div>
+        <button (click)="onCancelClick()">Cancel</button>
+        <!-- <button (click)="onOkClick()">Ok</button> -->
+      </div>
+    </div>
+  </div>

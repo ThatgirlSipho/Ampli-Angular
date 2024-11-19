@@ -1,0 +1,208 @@
+/* General Container Styling */
+.container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  /* Header Styling */
+  h1, h2 {
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Table Styling */
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .table th, .table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .table th {
+    background-color: #f4f4f4;
+  }
+  
+  /* Button Styling */
+  button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .create-button, .save-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .edit-button {
+    background-color: #FF9800;
+    color: white;
+  }
+  
+  .delete-button {
+    background-color: #F44336;
+    color: white;
+  }
+  
+  .close-button {
+    background-color: #777;
+    color: white;
+  }
+  
+  /* Modal Styling */
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1000;
+  }
+  
+  .modal h2 {
+    margin-top: 0;
+  }
+  
+  .modal form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal form label {
+    margin: 10px 0 5px;
+  }
+  
+  .modal form input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+
+  /* General Container Styling */
+.container {
+  font-family: Arial, sans-serif;
+  margin: 20px;
+}
+
+.mat-toolbar{
+  background-color: #020127;
+  color: white;
+}
+/* Header Styling */
+h1, h2 {
+  color: #333;
+  text-align: center;
+}
+
+/* Document List Styling */
+.document-list {
+  margin-top: 20px;
+}
+
+.document-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.document-table th, .document-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.document-table th {
+  background-color: #f4f4f4;
+}
+
+/* Button Styling */
+button {
+  padding: 8px 12px;
+  margin: 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.create-button, .save-button {
+  background-color: #4CAF50;
+  color: white;
+}
+
+.edit-button {
+  background-color: #FF9800;
+  color: white;
+}
+
+.delete-button {
+  background-color: #F44336;
+  color: white;
+}
+
+.close-button {
+  background-color: #777;
+  color: white;
+}
+
+/* Modal Styling */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  border-radius: 8px;
+  z-index: 1000;
+}
+
+.modal h2 {
+  margin-top: 0;
+}
+
+.modal form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal form label {
+  margin: 10px 0 5px;
+}
+
+.modal form input {
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+/* app.component.css */
+.example-container {
+  height: 100%;
+}
+
+.sidenav {
+  width: 250px;
+}
+
+.mat-toolbar {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.nav-item mat-icon {
+  margin-right: 8px; /* Adjust the value as needed */
+}

@@ -1,0 +1,20 @@
+<div class="container">
+  <!-- Profile block -->
+  <div class="profile-block card">
+    <img *ngIf="profile.profilePic" 
+    [src]="'data:image/jpeg;base64,' + profile.profilePic" 
+    alt="Profile Picture" 
+    (click)="fileInput.click()">
+<img *ngIf="!profile.profilePic" 
+    src="assets/profile.jpg" 
+    alt="Default Profile Picture" 
+    (click)="fileInput.click()">
+   
+    <input #fileInput type="file" style="display: none" (change)="onFileSelected($event)">
+    <h2>{{ profile.name || 'Your Name' }}</h2>
+    <p>Phone Number: {{ profile.cellNumber || 'Not provided' }}</p>
+    <p>Email: {{ profile.email || 'Not provided' }}</p>
+    <button class="view-button" (click)="goToProfile()">Update Your Profile</button>
+  </div>
+</div>
+

@@ -1,0 +1,1715 @@
+<div class="navbar">
+  <button class="back-btn" style="margin-left:-150px" (click)="goBack()">&#8592;</button>
+  <h1> {{legalDescription}} Application</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;" />
+    </button>
+    <button class="icon-button"  [routerLink]="'/home'">
+      <img src="assets/help.png" alt="Help Icon" />
+    </button>
+  </div>
+</div>
+
+<div class="page-background"></div>
+
+
+<div class="styled-buttons-container">
+  <button mat-raised-button class="styled-button" style="color: #020127;background-color: white;" (click)="openCommentsSidebar()">View Comments</button>
+  <button mat-raised-button class="styled-button" style="background-color: #020127; color: white;" (click)="openAssist('legal-entity-selection')">Help</button>
+</div>
+
+
+<!-- Add CommentSidebarComponent to the template -->
+<app-CommentSideBar #commentSidebar [applicationId]="applicationId"></app-CommentSideBar>
+
+
+<!--{{ entityDescription }} -->
+<mat-horizontal-stepper #stepper >
+<mat-step [stepControl]="applicationForm">
+<form [formGroup]="applicationForm" >
+  <!-- Stepper 1 ////////////////////////////////////////////// -->
+   <!-- Comment -->
+   <div class="form-container">
+    <h2>Basic legal entity Details </h2>
+    <div class="form-row">
+    <label for="legalEntityName" class="labels">Full Registered Name of Legal Entity</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label></mat-label>
+      <input matInput formControlName="legalEntityName" />
+      <mat-hint>Enter your legal entity name</mat-hint>
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Branch Trading Name </label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label>Legal Entity Trading Name</mat-label>
+      <input matInput formControlName="legalEntityTradingName" />
+      <mat-hint>Enter trading name</mat-hint>               
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Legal Entity Registration Number</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label>Legal Entity Registration Number</mat-label>
+      <input matInput formControlName="legalEntityRegistrationNumber" />
+      <mat-hint>Enter registration number, Max 14 characters</mat-hint>
+    </mat-form-field>
+  </div>
+
+  
+ 
+  <div class="form-row">
+    <label class="labels">Is the Legal Entity VAT registered?</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label>VAT Registered</mat-label>
+      <mat-select formControlName="vatRegisteredBool">
+        <mat-option [value]="true">Yes</mat-option>
+        <mat-option [value]="false">No</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div *ngIf="applicationForm.get('vatRegisteredBool')?.value === true" class="form-row">
+    <label for="legalEntityName" class="labels">VAT Registration Number</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label>VAT Registration Number</mat-label>
+      <input matInput formControlName="vatRegistrationNumber" />
+      <mat-hint>Enter your VAT number, Max 10 characters</mat-hint>
+     <!--  <mat-error *ngIf="applicationForm.get('vatRegistrationNumber')?.hasError('required')">
+        VAT Registration Number is required
+      </mat-error>
+      <mat-error *ngIf="applicationForm.get('vatRegistrationNumber')?.hasError('maxlength')">
+        VAT Registration Number cannot be more than 10 characters
+      </mat-error> -->
+    </mat-form-field>
+  </div>
+
+<div class="form-row">
+  <label class="labels"> Legal Entity Physical Address</label>
+ <mat-form-field appearance="fill" class="basicLegalEntityDetails" >
+  <mat-label>Legal Entity Physical Address</mat-label>
+  <input matInput 
+         matGoogleMapsAutocomplete
+         [country]="['ZA']"
+         (onAutocompleteSelected)="onAutocompleteSelected($event, 'physical')"
+         (onAddressChange)="onAddressChange($event, 'physical')"
+         formControlName="legalEntityPhysicalAddress">
+</mat-form-field>
+</div>
+<mat-checkbox (change)="copyAddress($event.checked)">Same as Physical Address</mat-checkbox>
+<div class="form-row">
+  <label class="labels">Legal Entity Postal Address</label>
+<mat-form-field appearance="fill" class="basicLegalEntityDetails">
+  <mat-label>Legal Entity Postal Address</mat-label>
+  <input matInput 
+         matGoogleMapsAutocomplete
+         [country]="['ZA']"
+         (onAutocompleteSelected)="onAutocompleteSelected($event, 'postal')"
+         (onAddressChange)="onAddressChange($event, 'postal')"
+         formControlName="legalEntityPostalAddress">
+</mat-form-field>
+</div>
+
+
+<div class="form-row">
+  <label for="legalEntityName" class="labels">Industry Description</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <mat-label>Industry Description</mat-label>
+    <input matInput formControlName="industryDescription" />
+    <mat-hint>Type in a description of your industry</mat-hint>            
+  </mat-form-field>
+</div>
+
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Industry Regulatory Body under which the Applicant operates and with whom registration is compulsory</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label>Industry Regulatory Body</mat-label>
+      <mat-select formControlName="industryRegulatoryBodyId">
+        <mat-option *ngFor="let body of industryRegulatoryBodies" [value]="body.industryRegulatoryBodyId">
+          {{ body.description }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+<div  class="form-row" *ngIf="applicationForm.get('industryRegulatoryBodyId')?.value == 5">
+  
+  <label class="labels" for="otherIndustryBody"> Reason for other</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label>Reason for Other</mat-label>
+      <input matInput formControlName="otherIndustryBody">
+      <mat-error *ngIf="applicationForm.get('otherIndustryBody')?.hasError('required')">
+        Reason for Other is required
+      </mat-error>
+    </mat-form-field>
+  </div>
+
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Registration Number with Regulatory Body</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label>Regulatory Body Registration Number</mat-label>
+      <input matInput formControlName="regulatoryBodyRegistrationNumber" />
+      <mat-hint>Type in registration number</mat-hint>              
+    </mat-form-field>
+
+    
+    
+  </div>
+  </div>       
+  <!-- <div class="button-group">
+    <div class="row">
+      <button mat-button class="action-btn" color="primary" (click)="onSaveAndExit()">Save and Exit</button>
+      <button mat-raised-button color="primary" class="action-btn" (click)="saveAndContinue()">Save and Continue</button>
+    </div>
+    <div class="row">
+      <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+      <button mat-button class="action-btn" (click)="stepper.next()">Next</button> -->
+    
+
+<div class="button-group">
+      <div class="row">
+        <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+        <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+      </div>
+    </div>    
+  
+  </form>
+  </mat-step>
+
+  <!-- Stepper 2 ////////////////////////////////////////////// -->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" >
+
+      <!-- Legal Entity Dependants -->
+<div class="form-container">
+  <div formArrayName="legalEntityDependants">
+    <h2> Legal Representatives</h2>
+    <div class="page-description">
+    <p>  How many Legal Representatives does the business have? Click on the button to add the business' Legal Representatives</p>
+  </div>
+    <div *ngFor="let dependant of legalEntityDependants.controls; let i = index" [formGroupName]="i">
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Full Name</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="dependantsFullName" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Income Tax Number</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="dependantsIncomeTaxNumber" />
+      </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Identification Type</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <mat-select formControlName="identificationTypeId">
+          <mat-option *ngFor="let type of identificationTypes" [value]="type.identificationTypeId">
+            {{ type.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+     
+    </div >
+    
+  </div>
+
+  <!-- Shareholders Details-->
+  <div style="margin-top:30px"></div>
+ <div formArrayName="shareholders"> 
+    <h2>Shareholders</h2>
+    <div class="page-description">
+    <p> Are there any shareholders with 20% or more shareholding in the company? Click on the button below to add shareholders with 20% or more sharesholding</p>
+  </div>
+    <div *ngFor="let shareholder of shareholders.controls; let i=index" [formGroupName]="i">
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Legal Entity Name</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="shareholderLegalEntityName" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Legal Entity Type</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <mat-select formControlName="legalEntityStructureId">
+          <mat-option *ngFor="let type of legalEntityStructures" [value]="type.legalEntityStructureId">
+            {{ type.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+
+     
+    </div>
+   
+  </div> 
+
+
+  <div style="margin-top:30px"></div>
+  <!-- Authorized Signatories -->
+   <div formArrayName="authorizedSignatories">
+    <h2>Authorized Signatories</h2>
+    <div class="page-description">
+      <p>
+        Details of Undersigned Authorised Signatories. 1-2 Undersigned Authosised Signatories may be added. Click on the button below to add them.
+      </p>
+    </div>
+    
+    <div *ngFor="let signatory of authorizedSignatories.controls; let i=index" [formGroupName]="i">
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Full Name</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="signatoriesName" />
+      </mat-form-field>
+      </div>
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Email Address</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label>Email Address</mat-label>
+        <input matInput formControlName="signatoriesEmailAddress" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Capacity</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label>Capacity</mat-label>
+        <input matInput formControlName="signatoriesCapacity" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Cell Number</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label>Cell Number</mat-label>
+        <input matInput formControlName="signatoriesCellNumber" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Identification Number</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label>Identification Number</mat-label>
+        <input matInput formControlName="signatoriesIdentificationNumber" />
+      </mat-form-field>
+      </div>
+
+   <div class="form-row">
+      <label for="legalDependantBit" class="labels">Legal Dependant</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label>Legal Dependant</mat-label>
+        <mat-select formControlName="legalDependantBit">
+          <mat-option [value]="true">Yes</mat-option>
+          <mat-option [value]="false">No</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+
+     
+    </div>
+    
+
+ 
+  </div> 
+  </div>
+<!--   <div class="next-button">
+    <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+</div>  -->
+
+<!-- <div class="button-group">
+  <div class="row">
+    <button mat-button class="action-btn" color="primary" (click)="onSaveAndExit()">Save and Exit</button>
+    <button mat-raised-button color="primary" class="action-btn" (click)="saveAndContinue()">Save and Continue</button>
+  </div>
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+</div> -->
+
+<div class="button-group">
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+</div> 
+
+ </form>
+</mat-step>
+
+  <!-- Stepper 3 ////////////////////////////////////////-->
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" >
+      <div class="form-container">
+        <h2> Master User Details</h2>
+        <div class="form-row">
+          <label for="legalEntityName" class="labels">Master User Full Name</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label></mat-label>
+      <input matInput formControlName="masterUserFullName" />
+      <mat-hint>Type Master user full name</mat-hint>            
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Master User ID Number</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label></mat-label>
+      <input matInput formControlName="masterUserIdnumber" />
+      <mat-hint>Type in master user id number</mat-hint>              
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Master User Email</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label></mat-label>
+      <input matInput formControlName="masterUserEmail" type="email" />
+      <mat-hint>Type in master user email</mat-hint>             
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Master User Mobile Number</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label></mat-label>
+      <input matInput formControlName="masterUserMobileNumber" />
+      <mat-hint>Type in master mobile number</mat-hint>     
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Master User Capacity</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label></mat-label>
+      <input matInput formControlName="masterUserCapacity" />
+      <mat-hint>Type in master user capacity</mat-hint>
+    </mat-form-field>
+  
+  </div>
+ 
+  </div>
+ <!--  <div class="next-button">
+    <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+</div>  -->
+
+<!-- <div class="button-group">
+  <div class="row">
+    <button mat-button class="action-btn" color="primary" (click)="onSaveAndExit()">Save and Exit</button>
+    <button mat-raised-button color="primary" class="action-btn" (click)="saveAndContinue()">Save and Continue</button>
+  </div>
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+</div> -->
+<div class="button-group">
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+</div> 
+
+  </form>
+  </mat-step>
+
+  <!-- Stepper 4 //////////////////////////////////////////// -->
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" >
+      <h2> Business Details </h2>
+    
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+          <mat-label>Do payers visit the branch outlet?</mat-label>
+          <mat-select formControlName="branchOutletBoolean">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      
+      <div>
+        <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+          <mat-label>Mandate Type</mat-label>
+          <mat-select formControlName="mandateTypeId">
+            <mat-option *ngFor="let type of mandateTypes" [value]="type.mandateTypeId">
+              {{ type.description }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div> 
+      
+      <div class="form-row">
+        <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+          <mat-label>Do you make use of a call center?</mat-label>
+          <mat-select formControlName="callCenterBoolean">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="button-group">
+        <div class="row">
+          <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+          <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+        </div>
+      </div> 
+  </form>
+  </mat-step>
+
+  <!-- Stepper 5 ////////////////////////////////////////// -->
+ 
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" >
+      <div class="form-container">
+        <h2>Current Method/s of Collection</h2>
+        <div class="form-row">
+         
+          <label for="legalEntityName" class="labels">Collection Types</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <mat-label></mat-label>
+    <mat-select  formControlName="collectionTypeIds" multiple (selectionChange)="onCollectionTypeChange($event)">
+      <mat-option *ngFor="let type of collectionTypes" [value]="type.collectionTypeId">
+        {{ type.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field> 
+  </div>
+
+  <!-- DebiCheck Form -->
+  <div *ngIf="isCollectionTypeSelected(1)">
+    <h3>DebiCheck</h3>
+    <div formGroupName="debiCheck">
+      <div class="form-row">
+        <label for="legalEntityName" class="labels"> DebiCheck Submitted Monthly (Value)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyValue" />
+      </mat-form-field>
+      </div>
+
+           <div class="form-row">
+          <label for="legalEntityName" class="labels">DebiCheck Submitted Monthly (Volume)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyVolume" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Success Rate (%)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      
+        <input matInput formControlName="successRate" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Existing Dispute (%)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="existingDispute" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">DebiCheck Average Tracking Days Used</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="averageTrackingDaysUsed" />
+      </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <!-- EFT Form -->
+  <div *ngIf="isCollectionTypeSelected(2)">
+    <h3>EFT</h3>
+    <div formGroupName="eft">
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">EFT Debits Submitted Monthly (Value)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyValue" />
+      </mat-form-field>
+      </div>
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">EFT Debits Submitted Monthly (Volume)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyVolume" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Success Rate (%)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="successRate" />
+      </mat-form-field>
+      </div>
+     
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">EFT Existing Dispute (%)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="existingDispute" />
+      </mat-form-field>
+    </div>
+    </div>
+  </div>
+
+  <!-- SEFT Form -->
+  <div *ngIf="isCollectionTypeSelected(3)">
+    <h3>SEFT</h3>
+    <div formGroupName="seft">
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">SEFT Debits Sumbitted Monthly (Value)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyValue" />
+      </mat-form-field>
+      </div>
+      
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">SEFT Debits Submitted Monthly (Volume)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyVolume" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Success Rate (%)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="successRate" />
+      </mat-form-field>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card Payment Form -->
+  <div *ngIf="isCollectionTypeSelected(4)">
+    <h3>Card Payments</h3>
+    <div formGroupName="cardPayment">
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Card Payments Submitted Monthly Debit (Value)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyDebitValue" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Card Payments Submitted Monthly Credit (Value)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyCreditValue" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Current Service Provider</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="currentServiceProvider" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Debit Commission</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="debitCommission" />
+      </mat-form-field> 
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Credit Commission</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="creditCommission" />
+      </mat-form-field>
+      </div>
+    </div>
+  </div> 
+
+  <!-- Cash Form -->
+   <div *ngIf="isCollectionTypeSelected(5)">
+    <h3>Cash</h3>
+    <div formGroupName="cash">
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Cash Submitted Monthly (Value)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyValue" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels"> Cash Submitted Monthly (Volume)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyVolume" />
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Success Rate (%)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="successRate" />
+      </mat-form-field>
+      </div>
+
+      <mat-checkbox formControlName="electronicBoolean">Will the Cash now be collected electronically</mat-checkbox>
+    </div>
+    </div>
+    </div>
+   <!--  <div class="next-button">
+      <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+  </div>  -->
+
+  <div class="button-group">
+    <div class="row">
+      <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+      <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+    </div>
+  </div> 
+</form>
+</mat-step>
+  <!-- Stepper 6 /////////////////////////////////////////////// -->
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" >
+
+
+          <div class="form-row">
+            <label for="name" class="labels">Do you make use of an existing payment provider?</label>
+            <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label>Existing Payment Provider</mat-label>
+              <mat-select formControlName="existingPaymentProviderBoolean">
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          
+          <div formArrayName="otherSupplierReasons" *ngIf="applicationForm.get('existingPaymentProviderBoolean')?.value">
+            <div *ngFor="let supplierReason of otherSupplierReasons.controls; let i = index" [formGroupName]="i" >
+              <div class="form-row">
+                <label class="labels" for="alternativeSupplierReasonsId">Alternative Supplier Reasons</label>
+                <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+                  <mat-label>Alternative Supplier Reasons</mat-label>
+                  <mat-select formControlName="alternativeSupplierReasonsId" multiple>
+                    <mat-option *ngFor="let reason of alternativeSupplierReasons" [value]="reason.alternativeSupplierReasonsId">
+                      {{ reason.description }}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              
+              <div class="form-row" *ngIf="(supplierReason.get('alternativeSupplierReasonsId')?.value ?? []).includes(7)">
+                <label class="labels">Other</label>
+                <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+                  <mat-label>Other Supplier Reasons</mat-label>
+                  <input matInput formControlName="otherDescription">
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="next-button">
+      <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+  </div>  -->
+ 
+  <div class="button-group">
+    <div class="row">
+      <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+      <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+    </div>
+  </div> 
+
+ 
+
+  </form>
+  </mat-step>
+
+  <!-- Stepper 7 ///////////////////////////////////////////// -->
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" >
+      <h2>AET Management</h2>
+      <div class="form-container">
+        <div class="form-row">
+          <label for="legalEntityName" class="labels">AET Email</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label>AET Email</mat-label>
+      <input matInput formControlName="aetEmail" />
+    </mat-form-field>
+  </div>
+  
+  
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Monthly Processing Limit</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+      <mat-label></mat-label>
+      <input matInput formControlName="monthlyProcessingLimit" />
+    </mat-form-field>
+  </div>
+  
+  </div> 
+        <!--  <div class="next-button">
+    <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+  </div> -->
+  <div class="button-group">
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+  </div> 
+  </form>
+  </mat-step>
+  <!-- Stepper 9 ////////////////////////////////////////// -->
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" >
+ <h2>Product Selection Details</h2>
+<div class="page-description">
+  <p>
+    Transaction Volumes / Values indicated below: To be attained within 6
+  </p>
+</div>
+  <mat-form-field class="basicLegalEntityDetails">
+  <mat-label>Select Products</mat-label>
+    <mat-select formControlName="productIds" multiple (selectionChange)="onProductChange($event)">
+      <mat-option *ngFor="let product of products" [value]="product.productId">{{ product.description }}</mat-option>
+    </mat-select>
+  </mat-form-field> 
+  
+  <div *ngIf="isProductSelected(1)">
+    <h3>DebiCheck Product Details</h3>
+    <div formGroupName="debiCheckProducts">
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Authentication Transaction Types</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-select formControlName="authenticationMechanismsId">
+          <mat-option *ngFor="let mechanism of authenticationMechanisms" [value]="mechanism.authenticationMechanismsId">
+            {{ mechanism.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Total Monthly Value</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="totalValueMonthly">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Maximum Installment Amount</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="maximumSingleCollection">
+      </mat-form-field>
+      </div>
+
+    </div>
+  </div>
+  
+  <div *ngIf="isProductSelected(2)">
+    <h3>Debit & Credit Card Payments Product Details</h3>
+    <div formGroupName="debitCreditPayments">
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Total Monthly Value</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="totalMonthlyValue">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Average Transactional Value</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="averageTransactionalValue">
+      </mat-form-field>
+      </div>
+
+
+      <div class="form-row">
+        <label class="labels">Balance Enquiry</label>
+        <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+          <mat-label>Balance Enquiry</mat-label>
+          <mat-select formControlName="balanceEnquiryBool">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+      <div class="form-row">
+        <label class="labels">Budget Facility</label>
+        <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+          <mat-label>Budget Facility</mat-label>
+          <mat-select formControlName="budgetFacilityBool">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label class="labels">Cash Back at POS</label>
+        <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+          <mat-label>Cash Back at POS</mat-label>
+          <mat-select formControlName="cashBackatPosBool">
+            <mat-option [value]="true">Yes</mat-option>
+            <mat-option [value]="false">No</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+
+  <!--     <mat-checkbox formControlName="balanceEnquiryBool">Balance Enquiry</mat-checkbox> -->
+   <!--    <mat-checkbox formControlName="budgetFacilityBool">Budget Facility</mat-checkbox> -->
+    <!--   <mat-checkbox formControlName="cashBackatPosBool">Cash Back at POS</mat-checkbox> -->
+    <div class="form-row">
+       <label class="labels"> Maximum Single Transactional Value </label>
+      <mat-form-field class="basicLegalEntiFtyDetails">
+        <mat-label>Maximum Single Transactional Value</mat-label>
+        <input matInput formControlName="maximumSingleTransactionalValue">
+      </mat-form-field>
+      </div>
+    </div>
+  </div>
+  
+
+
+  <div *ngIf="isProductSelected(3)">
+    <h3>Social Grant EFT Product Details</h3>
+    <div formGroupName="socialGrantEfts">
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Monthly Value</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="monthlyValue">
+      </mat-form-field>
+    </div>
+
+    </div>
+  </div>
+  
+  <div *ngIf="isProductSelected(4)">
+    <h3>EFT Debits Product Details</h3>
+    <div formGroupName="eftDebits">
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Total Value</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="totalValue">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Maximum Single Collection</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput formControlName="maximumSingleCollection">
+      </mat-form-field>
+      </div>
+
+
+    </div>
+  </div>
+  
+  <div *ngIf="isProductSelected(5)">
+    <h3>AVS/AVS-R Product Details</h3>
+    <div formGroupName="avs">
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">AVS-R Number of Requests Monthly</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="avsRNumberofRequestsMonthly">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Number of Requests Monthly</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="numberofRequestsMonthly">
+      </mat-form-field>
+      </div>
+
+
+    </div>
+  </div>
+  
+  <div *ngIf="isProductSelected(8)">
+    <h3>ALLPS Management Platform Product Details</h3>
+    <div formGroupName="allpsManagementPlatforms">
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Expected Monthly Requests</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="expectedMonthlyRequests">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Fee Payable on Authentication Success</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="feePayableAuthenticationSuccess">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Fee Payable on Document Collection</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="feePayableDocumentCollection">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Automatic expiration in Days</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="automaticExpiration">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Automatic revoke in Days</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="automaticRevoke">
+      </mat-form-field>
+      </div>
+
+
+      
+    </div>
+  </div>
+
+  <div *ngIf="isProductSelected(9)">
+    <h3>EFT Credits</h3>
+    <div formGroupName="eftcreditDetail">
+
+      <div >
+        <div class="form-row">
+        <label for="legalEntityName" class="labels">Credits Paid to: </label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-select  formControlName="eftCreditId" (selectionChange)="onEftCreditChange()">
+          <mat-option *ngFor="let eftCredit of eftCredits" [value]="eftCredit.eftCreditId">
+            {{eftCredit.description}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="form-row">
+      <label for="legalEntityName" class="labels">Select eWallet Options </label>  
+      <mat-form-field appearance="fill" *ngIf="eWalletOptions.length > 0" class="basicLegalEntityDetails">
+        <mat-label>Select eWallet Option</mat-label>
+        <mat-select formControlName="ewalletOptionId" (selectionChange)="onEwalletOptionChange()">
+          <mat-option *ngFor="let option of eWalletOptions" [value]="option.ewalletOptionId">
+            {{ option.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    </div>
+
+      
+      <div *ngIf="applicationForm.get('eftcreditDetail.ewalletOptionId')?.value === 1">
+
+        <div class="form-row">
+          <label for="legalEntityName" class="labels">Number of cards</label>  
+        <mat-form-field class="basicLegalEntityDetails">
+          <input matInput formControlName="numberOfCards" type="number">
+        </mat-form-field>
+        </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Number of Pin Mailers</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="numberOfPinMailers" type="number">
+      </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="legalEntityName" class="labels">Delivery Address</label>  
+      <mat-form-field class="basicLegalEntityDetails">
+        <input matInput formControlName="deliveryAddress">
+      </mat-form-field>
+      </div>
+
+      </div>
+    </div>
+  </div>
+   <!-- <div class="next-button">
+    <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+</div> 
+ -->
+ <div class="button-group">
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+</div> 
+
+  </form>
+</mat-step>
+
+
+<!-- Stepper 10 /////////////////////////////////////////// -->
+<mat-step [stepControl]="applicationForm">
+  <form [formGroup]="applicationForm" >
+<h2>Debit Order Banking Details</h2> 
+
+<div class="page-description">
+  <p>
+    This section of the application is dedicated to collecting the banking details required for setting up a debit order for the following fees:
+  </p>
+  <ul>
+    <li>Monthly Infrastructure Fee</li>
+    <li>Device Rental Fees</li>
+    <li>Funds to Credit the Mercantile AET Bank Account Should the Account Be in an Overdrawn State</li>
+  </ul>
+</div>
+<!-- Account Form 1 -->
+ <div formGroupName="accountForm1">
+
+
+<div class="form-row">
+  <label for="legalEntityName" class="labels">Account Holder Name</label>
+<mat-form-field appearance="fill" class="basicLegalEntityDetails">
+  <input matInput formControlName="accountHolderName" />
+  <mat-hint>Type in account holder name</mat-hint>
+</mat-form-field>
+</div>
+
+<div class="form-row">
+  <label for="legalEntityName" class="labels">Account Number</label>
+<mat-form-field appearance="fill" class="basicLegalEntityDetails">
+  <input matInput formControlName="accountNumber" />
+  <mat-hint>Type in account number</mat-hint>
+</mat-form-field>
+</div>
+
+<div class="form-row">
+  <label for="legalEntityName" class="labels">Account Type</label>
+<mat-form-field appearance="fill" class="basicLegalEntityDetails">
+  <mat-select formControlName="accountTypeId">
+    <mat-option *ngFor="let type of accountTypes" [value]="type.accountTypeId">
+      {{ type.description }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+
+<div class="form-row">
+  <label for="legalEntityName" class="labels">Bank Name</label>
+<mat-form-field appearance="fill" class="basicLegalEntityDetails">
+  <mat-select formControlName="bankNameId">
+    <mat-option *ngFor="let bank of banks" [value]="bank.bankNameId">
+      {{ bank.description }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+
+<div class="form-row">
+  <label for="legalEntityName" class="labels">Branch Name</label>
+<mat-form-field appearance="fill" class="basicLegalEntityDetails">
+  <input matInput formControlName="branchName" />
+  <mat-hint>Type in branch name</mat-hint>
+</mat-form-field>
+</div> 
+</div> 
+<!-- <div class="next-button">
+  <button mat-button class="create-btn"  (click)="saveAndContinue()">Save and Continue</button>
+</div>  -->
+<div class="button-group">
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+</div> 
+
+</form>
+</mat-step>
+
+
+<!-- Stepper 11 ////////////////////////////////////////// -->
+<mat-step [stepControl]="applicationForm">
+  <form [formGroup]="applicationForm" >
+ <h2>Capitec Bank AET Account</h2> 
+<!-- Account Form 2 -->
+ <div class="page-description">
+ <p>Through the conclusion of the agreement with Amplifin, Capitec Bank will automatically  become the DebiCheck Acquiring Bank for the Applicant. Net Credits received after processing  of payment instructions, associated monthly infrastructure and transaction fees and taking  cognizance of the minimum balance required to be maintained will on an automated basis be  transferred to the commercial bank account nominated and specified by the User.  The Capitec AET Bank Account has “read only” rights: - Except for the automated transfer to the 
+  account nominated by the User, no other transact ability is entertained on the Capitec AET Bank Account. 
+  </p>
+</div>
+<div formGroupName="accountForm2">
+  
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Account Holder Name</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <input matInput formControlName="accountHolderName" />
+    <mat-hint>Type in account holder name</mat-hint>
+  </mat-form-field>
+</div>
+
+ 
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Account Type</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <mat-select formControlName="accountTypeId">
+      <mat-option *ngFor="let type of accountTypes" [value]="type.accountTypeId">
+        {{ type.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+
+
+  
+<div class="form-row">
+  <label for="legalEntityName" class="labels">Bank Name</label>
+<mat-form-field appearance="fill" class="basicLegalEntityDetails">
+  <mat-select formControlName="bankNameId">
+    <mat-option *ngFor="let bank of banks" [value]="bank.bankNameId">
+      {{ bank.description }}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+</div>
+
+<div class="form-row">
+  <label for="legalEntityName" class="labels">Branch Name</label>
+<mat-form-field appearance="fill" class="basicLegalEntityDetails">
+  <input matInput formControlName="branchName" />
+  <mat-hint>Type in branch name</mat-hint>
+</mat-form-field>
+</div> 
+
+<div class="page-description">
+  <p>
+   Net Credits will be transferred to the nominated bank account detailed above on a normal business day after 12h00 but before 13h00 
+   and on Saturdays before 07h30. As there is a cost associated ith such transfers, please nominate a minimum daily transfer limit to 
+   be reached before a transfer is initiated. 
+  </p>
+</div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Minimum Daily Transfer Limit</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <input matInput formControlName="minimumDailyTransferLimit" />
+    <mat-hint>Type in minimum daily transfer limit</mat-hint>             
+  </mat-form-field>
+  </div>
+
+
+</div> 
+<!-- <div class="next-button">
+  <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+</div>  -->
+<div class="button-group">
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+</div> 
+
+</form>
+</mat-step>
+
+
+
+<!-- Stepper 8 ///////////////////////////////////////////// -->
+<mat-step [stepControl]="applicationForm">
+  <form [formGroup]="applicationForm" >
+<h2>Processing Code Details</h2> 
+
+<div formArrayName="processingcodes">
+
+  <div *ngFor="let processingCode of processingcodes.controls; let i=index" [formGroupName]="i">
+      <div class="form-row">
+          <label for="pC_TradingName" class="labels">Trading Name</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="pC_TradingName" />
+          </mat-form-field>
+      </div>
+      <div class="form-row">
+        <label for="abbreviatedName" class="labels">Preferred User Abbreviated Name</label>
+        <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+            <mat-label></mat-label>
+            <input matInput formControlName="abbreviatedName" />
+        </mat-form-field>
+    </div>
+
+   <!--  <div class="form-row">
+      <label for="physicalAddress" class="labels">Full Physical Address where Processing code will be implemented</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input 
+          matInput
+         matGoogleMapsAutocomplete
+          placeholder="Enter physical address"
+           formControlName="physicalAddress" />
+      </mat-form-field>
+  </div> -->
+  <div class="form-row">
+    <label for="physicalAddress" class="labels">Full Physical Address where Processing code will be implemented</label>
+    <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input 
+          matInput 
+          matGoogleMapsAutocomplete 
+          [country]="['ZA']"
+          placeholder="Enter physical address"
+          formControlName="physicalAddress" 
+          (onAutocompleteSelected)="onProcessingCodeAddressSelected($event, i)"
+          (onAddressChange)="onProcessingCodeAddressChange($event, i)" />
+    </mat-form-field>
+</div>
+
+
+      <div class="form-row">
+          <label for="landlordName" class="labels">Landlord Name</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="landlordName" />
+          </mat-form-field>
+      </div>
+
+      <div class="form-row">
+          <label for="landlordNumber" class="labels">Landlord Telephone Number</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="landlordNumber"/>
+          </mat-form-field>
+      </div>
+
+      <div class="form-row">
+        <label for="pcDebtorNumber" class="labels">Telephone Number where Processing Code will be implemented</label>
+        <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+            <mat-label></mat-label>
+            <input matInput formControlName="pcDebtorNumber" />
+        </mat-form-field>
+    </div>
+
+      <div class="form-row">
+          <label for="pcEmailAddress" class="labels">Email Address where Processing Code will be implemented</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="pcEmailAddress" />
+          </mat-form-field>
+      </div>
+
+      <div class="form-row">
+          <label for="managerName" class="labels">Manager Name</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="managerName" />
+          </mat-form-field>
+      </div>
+
+      <div class="form-row">
+          <label for="managerNumber" class="labels">Manager Cell Phone Number</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="managerNumber"/>
+          </mat-form-field>
+      </div>
+
+     
+    <h3> Contact Details to be provided to Debtors and used in DebiCheck</h3>
+
+    <div class="form-row">
+      <label for="pcDebtorName" class="labels">Name (i.e Call Centre)</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput formControlName="pcDebtorName" />
+      </mat-form-field>
+  </div>
+
+      <div class="form-row">
+          <label for="pcDebtorTeleNumber" class="labels">Telephone Number (i.e Call Centre number)</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="pcDebtorTeleNumber" />
+          </mat-form-field>
+      </div>
+
+      <div class="form-row">
+          <label for="pcDebtorEmailAddress" class="labels">Email Address (i.e Call Centre Email Address)</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="pcDebtorEmailAddress" />
+          </mat-form-field>
+      </div>
+
+      <div class="form-row">
+          <label for="debtorManagementSystemId" class="labels">Name of Debtor Management System</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <mat-select formControlName="debtorManagementSystemId">
+                  <mat-option *ngFor="let system of debtorManagementSystems" [value]="system.debtorManagementSystemId">
+                      {{ system.description }}
+                  </mat-option>
+              </mat-select>
+          </mat-form-field>
+      </div>
+      <div class="form row">
+        <label class="labels">Select Option:</label>
+        <mat-radio-group 
+          [formControl]="getOptionControl(processingCode)" 
+          (change)="onRadioButtonChange($event.value, i)">
+          <!-- Use ng-container to handle the condition for the "Same as Previous" option -->
+          <ng-container *ngFor="let option of radioOptions">
+            <mat-radio-button class="basicLegalEntityDetails" *ngIf="option.optionId !== 3 || i > 0" [value]="option.optionId">
+              {{ option.description }}
+            </mat-radio-button>
+          </ng-container>
+        </mat-radio-group>
+      </div>
+      
+
+
+ <!--   <div>
+        <label>Select Option:</label>
+        <mat-radio-group (change)="onRadioButtonChange($event.value, i)">
+          <mat-radio-button *ngFor="let option of radioOptions" [value]="option.optionId">
+            {{ option.description }}
+          </mat-radio-button>
+        </mat-radio-group>
+      </div>  -->
+
+     <!--  <div>
+        <label *ngFor="let option of radioOptions">
+          <input type="radio" 
+                 [value]="option.optionId" 
+                 formControlName="optionId"
+                 (change)="onRadioButtonChange(option.value, i)">
+          {{ option.description }}
+        </label>
+      </div> -->
+
+      <div *ngIf="processingCode.get('optionId')?.value === 1">
+        <p><strong>Account Holder Name:</strong> {{ capitecAetAccount?.accountHolderName }}</p>
+        <p><strong>Account Number:</strong> {{ capitecAetAccount?.accountNumber }}</p>
+        <p><strong>Bank Name:</strong> {{ getBankName(capitecAetAccount?.bankNameId) }}</p>
+        <p><strong>Account Type:</strong> {{ getAccountType(capitecAetAccount?.accountTypeId) }}</p>
+        <p><strong>Branch Name:</strong> {{ capitecAetAccount?.branchName }}</p>
+       
+      </div>
+
+
+      <div *ngIf="processingCode.get('optionId')?.value === 2 && processingCode.get('accountId')?.value">
+        <p><strong>Account Holder Name:</strong> {{ newlyAddedAccount[i]?.accountHolderName }}</p>
+        <p><strong>Account Number:</strong> {{ newlyAddedAccount[i]?.accountNumber }}</p>
+        <p><strong>Bank Name:</strong> {{ getBankName(newlyAddedAccount[i]?.bankNameId) }}</p>
+        <p><strong>Account Type:</strong> {{ getAccountType(newlyAddedAccount[i]?.accountTypeId) }}</p>
+        <p><strong>Branch Name:</strong> {{ newlyAddedAccount[i]?.branchName }}</p>
+      </div>
+
+      <div *ngIf="processingCode.get('optionId')?.value === 2 && processingCode.get('accountId')?.value === null" >
+        <form [formGroup]="accountForm">
+          <div class="form-row">
+          <label class="labels" >Account Holder Name</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+            <input matInput formControlName="accountHolderName" id="accountHolderName" />
+          </mat-form-field>
+        </div>
+        
+          <div class="form-row">
+          <label class="labels">Account Number</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+            <input matInput formControlName="accountNumber" id="accountNumber" />
+          </mat-form-field>
+        </div>
+
+          <div class="form-row">
+          <label class="labels">Bank Name</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+            <mat-select formControlName="bankNameId" id="bankNameId">
+              <mat-option *ngFor="let name of banks" [value]="name.bankNameId">
+                {{ name.description }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+          <div class="form-row">
+          <label class="labels">Branch Name</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">          
+            <input matInput formControlName="branchName" id="branchName" />
+          </mat-form-field>
+        </div>
+
+          <div class="form-row">
+          <label class="labels">Account Type</label>
+          <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+            <mat-select formControlName="accountTypeId" id="accountTypeId">
+              <mat-option *ngFor="let type of accountTypes" [value]="type.accountTypeId">
+                {{ type.description }}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+          <button type="button" (click)="addNewAccount(i)">Add Account</button>
+        </form>
+      </div>
+
+      <div *ngIf="processingCode.get('optionId')?.value ===3">
+        <p><strong>Account Holder Name:</strong> {{ previousAccount[i]?.accountHolderName }}</p>
+        <p><strong>Account Number:</strong> {{ previousAccount[i]?.accountNumber }}</p>
+        <p><strong>Bank Name:</strong> {{ getBankName(previousAccount[i]?.bankNameId) }}</p>
+        <p><strong>Account Type:</strong> {{ getAccountType(previousAccount[i]?.accountTypeId) }}</p>
+        <p><strong>Branch Name:</strong> {{ previousAccount[i]?.branchName }}</p>
+      </div>
+
+      
+  </div>
+  
+</div>
+<!-- <div class="next-button">
+<button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+</div> 
+-->
+<div class="button-group">
+<div class="row">
+  <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+  <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+</div>
+</div> 
+</form>
+</mat-step>
+<!-- Stepper 12 ///////////////////////////////////////// -->
+
+<!-- <mat-step [stepControl]="applicationForm">
+  <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+<h2>Backup Account Details</h2>  -->
+
+<!-- Account Form 3 -->
+<!-- <div formGroupName="accountForm3">
+  
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Account Holder Name</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <input matInput formControlName="accountHolderName" />
+  </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Account Number</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <input matInput formControlName="accountNumber" />
+  </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Account Type</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <mat-select formControlName="accountTypeId">
+      <mat-option *ngFor="let type of accountTypes" [value]="type.accountTypeId">
+        {{ type.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Bank Name</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <mat-select formControlName="bankNameId">
+      <mat-option *ngFor="let bank of banks" [value]="bank.bankNameId">
+        {{ bank.description }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <label for="legalEntityName" class="labels">Branch Name</label>
+  <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+    <input matInput formControlName="branchName" />
+  </mat-form-field>
+</div>
+
+</div> -->
+<!-- <div class="next-button">
+  <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Continue</button>
+</div>  -->
+<!-- <div class="button-group">
+  <div class="row" *ngIf="applicationStatusId === 1">
+    <button mat-button class="action-btn" color="primary" (click)="onSaveAndExit()">Save and Exit</button>
+    <button mat-raised-button color="primary" class="action-btn" (click)="saveAndContinue()">Save and Continue</button>
+  </div>
+  <div class="row">
+    <button mat-button class="action-btn" (click)="stepper.previous()">Previous</button>
+    <button mat-button class="action-btn" (click)="stepper.next()">Next</button>
+  </div>
+</div>
+
+</form> 
+</mat-step> -->
+
+<!-- Step 13 ////////////////////////////////////////////// -->
+<!-- Submit Button -->
+<mat-step [stepControl]="applicationForm">
+  <form [formGroup]="applicationForm" >
+    <div class="page-description">
+      <p>
+      Please ensure that for the following documents (if applicable) you follow the standards set below:
+      </p>
+      <ul>
+        <li>Clear Interior and Exterior photos</li>
+        <li>Income tax certificate</li>
+        <li>Front and back of RSA ID/Smart card</li>
+        <li>Proof of Business address is not older than 3 months</li>
+        <li>If Card Payment is selected: Proof of registered address <strong>as CIPC</strong> is not older than 3 months</li>
+        <li>Proof of Residential address is not older than 3 months</li>
+
+      </ul>
+    </div>
+   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div class="upload-container">
+      <div *ngFor="let doc of requiredDocuments" class="document-section">
+        <table class="document-table">
+          <thead>
+            <tr>
+              <th colspan="5">Document Description</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td colspan="5" class="document-description">{{ doc.description }}</td>
+            </tr>
+          </tbody>
+        </table>
+    
+        <table class="submitted-document-table" *ngIf="doc.submittedDocuments?.$values.length > 0">
+          <thead>
+            <tr>
+              <th>Submission Date</th>
+              <th>Document Link</th>
+              <th>Calculate Age</th>
+              <th>Document Age (months)</th>
+              <th>Admin Approved</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let submittedDoc of doc.submittedDocuments.$values" 
+                [ngClass]="{'highlight-row': isHighlighted(submittedDoc.documentAge)}"
+                [class.disabled-row]="isRowDisabled(submittedDoc.verificationStatus)">
+              <td>{{ submittedDoc.submissionDateTime | date: 'short' }}</td>
+              <td><a [href]="submittedDoc.document" target="_blank" class="view-link">View</a></td>
+              <td>
+                <mat-form-field appearance="outline" class="small-datepicker">
+                  <input
+                    matInput
+                    [max]="maxDate"
+                    [matDatepicker]="picker"
+                    (dateChange)="onDateChange($event, submittedDoc)"
+                    placeholder="Select date"
+                    [disabled]="isRowDisabled(submittedDoc.verificationStatus)"
+                  />
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+              </td>
+              <td>{{ submittedDoc.documentAge }} months</td>
+              <td>{{ submittedDoc.verificationStatus }} </td>
+              <td>
+                <button mat-icon-button (click)="deleteDocument(submittedDoc.submittedDocumentId,submittedDoc.document)"
+                [disabled]="isRowDisabled(submittedDoc.verificationStatus)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    
+    <div class="form-row">
+      <label class="labels">Request Additional Documents</label>
+      <mat-form-field appearance="fill" class="basicLegalEntityDetails">
+        <mat-label>Select Required Documents</mat-label>
+        <mat-select [(value)]="selectedDocumentIds" multiple (selectionChange)="checkSubmitStatus()"  [disabled]="isDisabled">
+          <mat-option *ngFor="let document of documents" [value]="document.requiredDocumentId">
+            {{ document.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <div style="justify-content: flex-end; display: flex;">
+      <button type="button" mat-raised-button color="primary" (click)="requestDocuments(applicationId)"  [disabled]="isDisabled">Request Documents</button>
+    </div>
+    
+    <div class="button-group" *ngIf="applicationStatusId === 2"> 
+      <div style="margin-top:20px" class="row">   
+        <button mat-raised-button color="warn" (click)="returnApplication()">Return Application</button>
+        <button mat-raised-button color="primary" (click)="submitApplication()" [disabled]="isSubmitDisabled">Submit Application</button>
+       
+      </div> 
+    </div>
+    
+    
+    
+    
+
+
+
+
+
+
+
+
+
+
+
+
+  </form>
+</mat-step>
+<!--   <button mat-raised-button color="primary" (click)="stepper.previous()">Previous</button>
+      <button  mat-raised-button color="primary" type="submit">Submit Application</button> -->
+</mat-horizontal-stepper>

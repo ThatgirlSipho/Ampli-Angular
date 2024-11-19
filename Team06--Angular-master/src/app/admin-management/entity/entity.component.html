@@ -1,0 +1,167 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" class="sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/main">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+     <!-- <a mat-list-item routerLink="/user">
+        <mat-icon>people</mat-icon>
+        <span>User Management</span>
+      </a>  -->
+      <a mat-list-item routerLink="/document">
+        <mat-icon>description</mat-icon> <!-- Changed to 'description' for document icon -->
+        <span>Document Management</span>
+      </a>
+      <a mat-list-item routerLink="/entity">
+        <mat-icon>business</mat-icon>
+        <span>Entity Management</span>
+      </a>
+      <a mat-list-item routerLink="/financial">
+        <mat-icon>credit_card</mat-icon> <!-- Changed to 'credit_card' for financial icon -->
+        <span>Financial Management</span>
+      </a>
+      <a mat-list-item routerLink="/supplier">
+        <mat-icon>shopping_bag</mat-icon> <!-- Changed to 'shopping_bag' for supplier icon -->
+        <span>Supplier Management</span>
+      </a>
+      <a mat-list-item routerLink="/settings">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </a>
+      <!-- <a mat-list-item routerLink="/link-delink">
+        <mat-icon>sync-alt</mat-icon>
+        <span>Link & Delink</span>
+      </a> -->
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- Toolbar with menu button -->
+    <mat-toolbar >
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Entity Management</span>
+    </mat-toolbar>
+
+    <!-- Main content -->
+<div class="container">
+  <button class="back-btn"[routerLink]="'/main'">&#8592;</button>
+  <h1>Entity Management</h1>
+
+      <!-- List of Entities -->
+      <div class="entity-list">
+        <h2>Legal Entity Types</h2>
+        <button class="create-button" (click)="openCreateEntityModal()">Create Legal Enity </button>
+        <table class="entity-table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Edit</th>
+              <th>Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let entityType of entityTypes">
+              <td>{{entityType.legalEntityTypeId}}</td>
+              <td>{{entityType.description}}</td>
+              <td>
+                <button class="edit-button" (click)="openEntityEditModal(entityType)">Edit</button>              
+              </td>
+              <td>
+                <button class="delete-button" (click)="confirmLegalDelete(entityType.legalEntityTypeId)">Delete</button>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    
+      <!-- Create Legal enity type Modal -->
+  <div *ngIf="showCreateEntityModal" class="modal">
+    <h2>Create Legal Entity</h2>
+    <form [formGroup]="createForm" (ngSubmit)="saveNewType()">
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name">
+      <button type="submit" class="save-button">Save</button>
+    </form>
+    <button class="close-button" (click)="closeCreateEntityModal()">Close</button>
+  </div>
+  
+    
+      <!-- Edit legal entity type Modal -->
+      <div *ngIf="showEditEntityModal" class="modal">
+        <h2>Edit Legal Entity</h2>
+        <form [formGroup]="editEntityForm" (ngSubmit)="saveEntityEdit()">
+          <label for="id">ID:</label>
+          <input id="id" type="text" formControlName="id">
+          <label for="name">Name:</label>
+          <input id="name" type="text" formControlName="name">
+         
+          <button type="submit" class="save-button">Save</button>
+        </form>
+        <button class="close-button" (click)="closeEditEntityModal()">Close</button>
+      </div>
+    </div>
+
+<!-- ///////////////////////////////////////////////////////////////////////////////////// -->
+
+  <!-- List of bodies -->
+  <div class="regulatory-list">
+    <h2>Industry Regulatory Body</h2>
+    <button class="create-button" (click)="openCreateModal()">Create Industry Body </button>
+    <table class="regulatory-table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let body of industryRegulatoryBody">
+          <td>{{body.industryRegulatoryBodyId}}</td>
+          <td>{{body.description}}</td>
+          <td>
+            <button class="edit-button" (click)="openEditModal(body)">Edit</button>              
+          </td>
+          <td>
+            <button class="delete-button" (click)="confirmDelete(body.industryRegulatoryBodyId)">Delete</button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Create Industry Body Modal -->
+<div *ngIf="showCreateModal" class="modal">
+<h2>Create</h2>
+<form [formGroup]="createForm" (ngSubmit)="saveNew()">
+  <label for="name">Name:</label>
+  <input id="name" type="text" formControlName="name">
+  <button type="submit" class="save-button">Save</button>
+</form>
+<button class="close-button" (click)="closeCreateModal()">Close</button>
+</div>
+
+
+  <!-- Edit Industry Body Modal -->
+  <div *ngIf="showEditModal" class="modal">
+    <h2>Edit</h2>
+    <form [formGroup]="editForm" (ngSubmit)="saveEdit()">
+      <label for="id">ID:</label>
+      <input id="id" type="text" formControlName="id" readonly>
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name">
+     
+      <button type="submit" class="save-button">Save</button>
+    </form>
+    <button class="close-button" (click)="closeEditModal()">Close</button>
+  </div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

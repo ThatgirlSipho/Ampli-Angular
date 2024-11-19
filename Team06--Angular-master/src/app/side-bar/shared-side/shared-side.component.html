@@ -1,0 +1,25 @@
+<div class="sidebar" [class.collapsed]="isCollapsed">
+  <button (click)="toggleSidebar()" class="toggle-btn">
+    {{ isCollapsed ? 'Expand' : 'Collapse' }}
+  </button>
+
+  <!-- Consultant Sidebar -->
+  <ng-container *ngIf="userRole === 'Consultant'">
+    <app-consultant-side></app-consultant-side>
+  </ng-container>
+
+  <!-- Consultant Manager Sidebar -->
+  <ng-container *ngIf="userRole === 'Consultant Manager'">
+    <app-con-manager></app-con-manager>
+  </ng-container>
+
+  <!-- Administrator Sidebar -->
+  <ng-container *ngIf="userRole === 'Administrator'">
+    <app-administrator-side></app-administrator-side>
+  </ng-container>
+
+  <!-- Amplifin Admin Sidebar -->
+  <ng-container *ngIf="userRole === 'Amplifin Admin'">
+    <app-admin></app-admin>
+  </ng-container>
+</div>

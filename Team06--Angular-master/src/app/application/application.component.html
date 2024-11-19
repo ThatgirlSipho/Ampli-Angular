@@ -1,0 +1,2025 @@
+<h1>{{ entityDescription }}: Application</h1>
+<!-- Rest of your application form code... -->
+<!-- <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p> -->
+
+
+<mat-horizontal-stepper #stepper >
+  <mat-step [stepControl]="applicationForm">
+  <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+  <ng-template matStepLabel>Step</ng-template>
+          <h2>Legal Entity</h2>
+
+          <div class="form-container">
+            <div class="form-row">
+              <label for="legalEntityName" class="labels">Legal Entity Name</label>
+              <mat-form-field class="basicLegalEntityDetails">
+                <mat-label></mat-label>
+                <input matInput formControlName="legalEntityName" [errorStateMatcher]="nameMatcher"
+                       placeholder="Ex. Njabulo Tshabalala">
+                <mat-hint>Enter your full name</mat-hint>
+                <mat-error *ngIf="nameFormControl.hasError('required')">Name is <strong>required</strong></mat-error>
+              </mat-form-field>
+            </div>
+          
+            <div class="form-row">
+              <label for="legalEntityRegistrationNumber" class="labels">Registration Number</label>
+              <mat-form-field class="basicLegalEntityDetails">
+                <mat-label></mat-label>
+                <input matInput formControlName="legalEntityRegistrationNumber" [errorStateMatcher]="registrationNumberMatcher"
+                       placeholder="Ex. 2022/123456/07" maxlength="14">
+                <mat-hint>Enter registration number, Max 14 characters</mat-hint>
+                <mat-error *ngIf="registrationNumberFormControl.hasError('required')">Registration Number is <strong>required</strong></mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <label for="name" class="labels">Trading Name</label>
+              <mat-form-field class="basicLegalEntityDetails">
+                <mat-label></mat-label>
+                <input matInput formControlName="legalEntityTradingName" [errorStateMatcher]="tradingNameMatcher"
+                       placeholder="Ex. Bright Minds Tutoring">
+                <mat-hint>Enter your trading name</mat-hint>
+                <mat-error *ngIf="tradingNameFormControl.hasError('required')">Trading name is <strong>required</strong></mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <label for="name" class="labels">Physical Adress</label>
+             <mat-form-field class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="legalEntityPhysicalAddress" [errorStateMatcher]="physicalAddressMatcher"
+                     placeholder="Ex. 1083 Prospect St, Hatfield, Pretoria, 0183">
+              <mat-hint>Enter the physical address</mat-hint>
+              <mat-error *ngIf="physicalAddressFormControl.hasError('required')">Physical address is <strong>required</strong></mat-error>
+            </mat-form-field> 
+            </div>
+
+            <div class="form-row">
+              <label for="name" class="labels">Postal Address</label>
+              <mat-form-field class="basicLegalEntityDetails">
+                <mat-label></mat-label>
+                <input matInput formControlName="legalEntityPostalAddress" [errorStateMatcher]="postalAddressMatcher"
+                       placeholder="Ex. 1083 Prospect St, Hatfield, Pretoria, 0183">
+                <mat-hint>Enter the postal address</mat-hint>
+                <mat-error *ngIf="physicalAddressFormControl.hasError('required')">Postal address is <strong>required</strong></mat-error>
+              </mat-form-field> 
+            </div>
+
+            <div class="form-container">
+              <div class="form-row">
+                <label for="name" class="labels">Vat Registered</label>
+                <mat-checkbox formControlName="vatRegisteredBool"></mat-checkbox>
+                <mat-error *ngIf="applicationForm.get('vatRegisteredBool')?.hasError('required')">
+                  Vat Registered is required is <strong>required</strong>
+                </mat-error>
+              </div>
+            </div>
+
+            <div class="form-row" *ngIf="displayVatForm">
+              <label for="name" class="labels">VAT Number</label>
+              <mat-form-field class="basicLegalEntityDetails">
+                <mat-label></mat-label>
+                <input matInput formControlName="vatRegistrationNumber" placeholder="Ex. 1234567890" maxlength="10">
+                <mat-hint>Enter your VAT number, Max 10 characters</mat-hint>
+                <mat-error *ngIf="vatNumberFormControl.hasError('required')">VAT number is <strong>required</strong></mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="form-row">
+              <label for="name" class="labels">Industry Description</label>
+             <mat-form-field class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input matInput formControlName="industryDescription"
+                     placeholder="We are a business that assists customers in banking, investments">
+              <mat-hint>Type in a description of your industry</mat-hint>
+              <mat-error *ngIf="physicalAddressFormControl.hasError('required')">Industry description is <strong>required</strong></mat-error>
+            </mat-form-field> 
+            </div>
+
+            <div class="form-row">
+              <label for="name" class="labels">Industry Regulatory Body</label>
+            <mat-form-field class="basicLegalEntityDetails">
+                <mat-label></mat-label>
+                <mat-select formControlName="industryRegulatoryBodyId">
+                  <mat-option *ngFor="let body of industryRegulatoryBody" [value]="body.industryRegulatoryBodyId">{{ body.description }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="industryRegulatoryBodyFormControl.hasError('required')">Industry regulatory body is <strong>required</strong></mat-error>
+            </mat-form-field>
+            </div>
+            
+            
+            <div *ngIf="industryRegulatoryBodyFormControl.value !==5">
+              <div class="form-row">
+                <label for="name" class="labels">Regulatory Body Registration No.</label>
+              <mat-form-field class="basicLegalEntityDetails">
+              <mat-label></mat-label>
+              <input  matInput formControlName="regulatoryBodyRegistrationNumber" [errorStateMatcher]="otherRegistrationNumberMatcher">
+              <mat-error *ngIf="otherRegistrationNumberFormControl.hasError('required')">Other Registration number is <strong>required</strong></mat-error>
+              </mat-form-field>
+              </div>
+            </div>
+
+
+            <div *ngIf="industryRegulatoryBodyFormControl.value === 6">
+              <mat-form-field class="basicLegalEntityDetails">
+                <mat-label>If other, please specify</mat-label>
+                <input matInput [formControl]="otherRegulatoryBodyFormControl" [errorStateMatcher]="otherRegulatoryBodyMatcher">
+                <mat-error *ngIf="otherRegulatoryBodyFormControl.hasError('required')">Other industry regulatory body is <strong>required</strong></mat-error>
+              </mat-form-field>     
+          </div>
+        </div>
+
+        <!-- Legal Entity Dependants -->
+  <div formArrayName="legalEntityDependants">
+    <div *ngFor="let dependant of legalEntityDependants.controls; let i = index" [formGroupName]="i">
+      <mat-form-field appearance="fill">
+        <mat-label>Full Name</mat-label>
+        <input matInput formControlName="dependantsFullName" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Income Tax Number</mat-label>
+        <input matInput formControlName="dependantsIncomeTaxNumber" />
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Identification Type</mat-label>
+        <mat-select formControlName="identificationTypeId">
+          <mat-option *ngFor="let type of identificationType" [value]="type.identificationTypeId">
+            {{ type.description }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <button mat-raised-button color="warn" (click)="removeDependant(i)">Remove</button>
+    </div>
+    <button mat-raised-button color="primary" type="button" (click)="addDependant()">Add New Dependant</button>
+  </div>
+
+            <!-- <div class="form-row">
+              <label for="name" class="labels">Number of Legal Representives</label>
+              <mat-form-field class="basicLegalEntityDetails">
+                <mat-label></mat-label>
+                <input matInput type="number" min="1" formControlName="numberOfRepsFormControl" (change)="numberOfRepsChanged()">
+                <mat-error *ngIf="numberOfRepsFormControl.hasError('required')">Number of Legal representatives is <strong>required</strong></mat-error>
+            </mat-form-field>
+          </div>
+           
+            <div *ngFor="let representativeFG of representativeFormGroups; let i = index" [formGroup]="representativeFG">
+                <h4>Legal Representative {{ i + 1 }}</h4>
+                <mat-form-field class="basicLegalEntityDetails">
+                  <mat-label>Full Name</mat-label>
+                  <input matInput formControlName="fullName">
+                  <mat-error *ngIf="representativeFG.get('fullName')?.hasError('required')">Full name is <strong>required</strong></mat-error>
+                </mat-form-field>
+  
+                <mat-form-field class="basicLegalEntityDetails">
+                  <mat-label>Income Tax Number</mat-label>
+                  <input matInput type ="number" formControlName="incomeTaxNumber">
+                  <mat-error *ngIf="representativeFG.get('incomeTaxNumber')?.hasError('required')">Income tax is <strong>required</strong></mat-error>
+                </mat-form-field>
+  
+                <mat-form-field class="basicLegalEntityDetails">
+                  <mat-label>Identification Type</mat-label>
+                  <mat-select formControlName="identificationType">
+                    <mat-option *ngFor="let type of identificationType" [value]="type.identificationTypeId">{{ type.description }}</mat-option>
+                  </mat-select>
+                  <mat-error *ngIf="representativeFG.get('identificationType')?.hasError('required')">ID type is <strong>required</strong></mat-error>
+                </mat-form-field>
+              </div> -->
+            
+    <!--upload document  -->
+
+    <div class="file-upload-wrapper">
+      <div class="checklist-container">
+        <h3 style="font-weight: bold;">Required Documents (Not older than 3 months)</h3>
+        <ul>
+          <li>
+            <input type="checkbox" /> Proof of Business Address
+          </li>
+          <li>
+            <input type="checkbox" /> Proof of Residential Address
+          </li>
+          <li>
+            <input type="checkbox" /> Income TAX Certificate
+          </li>
+          <li>
+            <input type="checkbox" /> Identification Document (Front and Back, Certified)
+          </li>
+          <li>
+            <input type="checkbox" /> Passport (Front and Back, Certified, Including work permit)
+          </li>
+        </ul>
+      </div>
+    
+      <div class="file-upload-container" [class.dragover]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+        
+        <div class="drag-drop-area" *ngIf="!isDragOver">
+          Drag or drop files here
+        </div>
+        <div class="drag-drop-area" *ngIf="isDragOver">
+          Release to upload files
+        </div>
+    
+        <div *ngIf="selectedFiles.length > 0">
+          <div *ngFor="let file of selectedFiles; let i = index">
+            {{ file.file.name }}
+            <button mat-button (click)="uploadFile(file)" [disabled]="file.uploading">
+              Upload
+            </button>
+            <button mat-button (click)="removeFile(i)">Cancel</button>
+    
+            <mat-progress-bar *ngIf="file.uploading" mode="determinate" [value]="file.progress"></mat-progress-bar>
+          </div>
+    
+          <div *ngIf="selectedFiles.length > 1">
+            <button mat-button (click)="uploadAll()">Upload All</button>
+            <button mat-button (click)="removeAll()">Cancel All</button>
+          </div>
+        </div>
+    
+        <div class="button-container">
+          <button mat-button (click)="fileInput.click()">Browse Files</button>
+        </div>
+      </div>
+    </div>
+    
+    <h2>Uploaded Files</h2>
+    <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p>
+    <table>
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of fileLinks">
+          <td>{{ file.name }}</td>
+          <td><a [href]="file.link" target="_blank">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+    
+<!--  -->
+      <div>
+        <br>
+      </div>
+          <div class="next-button">
+              <button mat-button class="next-btn"  (click)="saveAndContinue()">Save and Exit</button>
+          </div>   
+          <div>
+            <br>
+          </div>
+          <div class="next-button">
+            <button mat-button class="next-btn" >Save and Continue</button>
+        </div>  
+    
+    </form>
+  </mat-step>
+
+  <!--- /////////////////////////////////////////Shareholder information details////////////////////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+      <ng-template matStepLabel>Step</ng-template>
+      <h2>Shareholder Information Details</h2>
+  
+<!-- Shareholders -->
+<div formArrayName="shareholders">
+  <h3>Shareholders</h3>
+  <div *ngFor="let shareholder of shareholders.controls; let i=index" [formGroupName]="i">
+    <mat-form-field appearance="fill">
+      <mat-label>Legal Entity Name</mat-label>
+      <input matInput formControlName="shareholderLegalEntityName" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Legal Entity Type</mat-label>
+      <mat-select formControlName="legalEntityTypeId">
+        <mat-option *ngFor="let type of legalEntityTypes" [value]="type.legalEntityTypeId">
+          {{ type.description }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="warn" type="button" (click)="removeShareholder(i)">Remove Shareholder</button>
+  </div>
+  <button mat-raised-button color="primary" type="button" (click)="addShareholder()">Add Shareholder</button>
+</div>
+
+<!-- Authorized Signatories -->
+<div formArrayName="authorizedSignatories">
+  <h3>Authorized Signatories</h3>
+  <div *ngFor="let signatory of authorizedSignatories.controls; let i=index" [formGroupName]="i">
+    <mat-form-field appearance="fill">
+      <mat-label>Email Address</mat-label>
+      <input matInput formControlName="signatoriesEmailAddress" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Capacity</mat-label>
+      <input matInput formControlName="signatoriesCapacity" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Cell Number</mat-label>
+      <input matInput formControlName="signatoriesCellNumber" />
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Identification Number</mat-label>
+      <input matInput formControlName="signatoriesIdentificationNumber" />
+    </mat-form-field>
+    <mat-checkbox formControlName="legalDependantBit">Legal Dependant</mat-checkbox>
+    <button mat-raised-button color="warn" type="button" (click)="removeAuthorizedSignatory(i)">Remove Signatory</button>
+  </div>
+  <button mat-raised-button color="primary" type="button" (click)="addAuthorizedSignatory()">Add Signatory</button>
+</div>
+
+        <div class="file-upload-wrapper">
+          <div class="checklist-container">
+            <h3>Required Documents(Not older than 3 months)</h3>
+            <ul>
+              <li >
+                <input type="checkbox" /> Shareholder Identification Document(Front and Back, Certified) 
+              </li>
+            </ul>
+          </div>   
+
+        <!-- upload document -->
+        <div class="file-upload-container" [class.dragover]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+          <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+          
+          <div class="drag-drop-area" *ngIf="!isDragOver">
+            Drag or drop files here
+          </div>
+          <div class="drag-drop-area" *ngIf="isDragOver">
+            Release to upload files
+          </div>
+      
+          <div *ngIf="selectedFiles.length > 0">
+            <div *ngFor="let file of selectedFiles; let i = index">
+              {{ file.file.name }}
+              <button mat-button (click)="uploadFile(file)" [disabled]="file.uploading">
+                Upload
+              </button>
+              <button mat-button (click)="removeFile(i)">Cancel</button>
+      
+              <mat-progress-bar *ngIf="file.uploading" mode="determinate" [value]="file.progress"></mat-progress-bar>
+            </div>
+      
+            <div *ngIf="selectedFiles.length > 1">
+              <button mat-button (click)="uploadAll()">Upload All</button>
+              <button mat-button (click)="removeAll()">Cancel All</button>
+            </div>
+          </div>
+      
+          <div class="button-container">
+            <button mat-button (click)="fileInput.click()">Browse Files</button>
+          </div>
+        </div>
+      </div>
+      
+      <h2>Uploaded Files</h2>
+      <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p>
+      <table>
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of fileLinks">
+            <td>{{ file.name }}</td>
+            <td><a [href]="file.link" target="_blank">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--  -->
+
+      <div class="button-container">
+        <div class="back-button">
+          <button mat-button matStepperPrevious class="back-btn">Back</button>
+        </div> 
+        <div class="next-button">
+          <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+      </div>   
+      </div>
+
+    </form>
+  </mat-step>
+
+
+  <!---///////////////////////////////////////Master user details/////////////////////////////////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Master User Details</h2>
+          <table class="bordered-table">
+          <thead>
+            <tr>
+              <th>Is Master User One of the Dependents?</th> 
+              <th>Full Names</th>
+              <th>ID/Passport Number </th>
+              <th>Mobile Number</th>
+              <th>Email Address</th>
+              <th>Capacity</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr >
+              <td>
+                <select>
+                  <option value="option1">Yes</option>
+                  <option value="option2">No</option>
+                </select>
+                
+              </td>
+              <td>
+                <input matInput placeholder="Enter value" formControlName="masterUserFullName" >
+              </td>
+              <td>
+                <input matInput type="number"  placeholder="Enter value" formControlName="masterUserIdnumber" >
+              </td>
+              <td>
+                <input matInput type="number"  placeholder="Enter value" formControlName="masterUserIdnumber">
+              </td>
+              <td>
+                <input matInput type="email" placeholder="Enter value" formControlName="masterUserEmail">
+              </td>
+              <td>
+                <input matInput type="number"  placeholder="Enter value" formControlName="masterUserCapacity">
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="file-upload-wrapper">
+          <div class="checklist-container">
+            <h3>Required Documents(Not older than 3 months)</h3>
+            <ul>
+              <li >
+                <input type="checkbox" /> Master User ID(Front and Back, Certified) 
+              </li>
+            </ul>
+          </div>  
+          
+          
+        <!-- Upload document  -->
+        <div class="file-upload-container" [class.dragover]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+          <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+          
+          <div class="drag-drop-area" *ngIf="!isDragOver">
+            Drag or drop files here
+          </div>
+          <div class="drag-drop-area" *ngIf="isDragOver">
+            Release to upload files
+          </div>
+      
+          <div *ngIf="selectedFiles.length > 0">
+            <div *ngFor="let file of selectedFiles; let i = index">
+              {{ file.file.name }}
+              <button mat-button (click)="uploadFile(file)" [disabled]="file.uploading">
+                Upload
+              </button>
+              <button mat-button (click)="removeFile(i)">Cancel</button>
+      
+              <mat-progress-bar *ngIf="file.uploading" mode="determinate" [value]="file.progress"></mat-progress-bar>
+            </div>
+      
+            <div *ngIf="selectedFiles.length > 1">
+              <button mat-button (click)="uploadAll()">Upload All</button>
+              <button mat-button (click)="removeAll()">Cancel All</button>
+            </div>
+          </div>
+      
+          <div class="button-container">
+            <button mat-button (click)="fileInput.click()">Browse Files</button>
+          </div>
+        </div>
+      </div>
+      
+      <h2>Uploaded Files</h2>
+      <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p>
+      <table>
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of fileLinks">
+            <td>{{ file.name }}</td>
+            <td><a [href]="file.link" target="_blank">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+      <!--  -->
+      <br>
+        <div class="button-container">
+          <div class="back-button">
+            <button mat-button matStepperPrevious class="back-btn">Back</button>
+          </div> 
+          <div class="next-button">
+            <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+          </div>
+        </div>
+
+       </form>
+    </mat-step>
+
+  
+
+
+  <!---/////////////////////////////////////////////Client interaction details/////////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Client Interaction Details</h2>
+
+        <div class="form-container">
+          <div class="form-row">
+            <label for="name" class="labels">Do payers visit the branch outlet?</label>
+            <mat-checkbox formControlName="branchOutletBoolean"></mat-checkbox>
+            <mat-error *ngIf="applicationForm.get('branchOutletBoolean')?.hasError('required')">
+              The branch outlet is <strong>required</strong>
+            </mat-error>
+          </div>
+        </div>
+        
+    <div class="form-container">
+      <div class="form-row">
+        <label for="name" class="labels">Type of Mandate</label>
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <mat-select formControlName="mandateTypeId">
+          <mat-option *ngFor="let mandate of mandateTypes" [value]="mandate.mandateTypeId">{{ mandate.description }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="mandateTypeFormControl.hasError('required')">Mandate type is <strong>required</strong></mat-error>
+    </mat-form-field>
+    </div>
+  </div>
+
+  <div class="form-container">
+    <div class="form-row">
+      <label for="name" class="labels">Do you make use of a call center?</label>
+      <mat-checkbox formControlName="callCenterBoolean"></mat-checkbox>
+      <mat-error *ngIf="applicationForm.get('callCenterBoolean')?.hasError('required')">
+        The call centre is <strong>required</strong>
+      </mat-error>
+    </div>
+  </div>
+
+    <div class="file-upload-wrapper">
+      <div class="checklist-container">
+        <h3>Required Documents(Not older than 3 months)</h3>
+        <ul>
+          <li >
+            <input type="checkbox" /> Sample of Mandate currently in use(Front and Back, Certified) 
+          </li>
+        </ul>
+      </div>             
+    
+      <!-- upload document -->
+      <div class="file-upload-container" [class.dragover]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+        <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+        
+        <div class="drag-drop-area" *ngIf="!isDragOver">
+          Drag or drop files here
+        </div>
+        <div class="drag-drop-area" *ngIf="isDragOver">
+          Release to upload files
+        </div>
+    
+        <div *ngIf="selectedFiles.length > 0">
+          <div *ngFor="let file of selectedFiles; let i = index">
+            {{ file.file.name }}
+            <button mat-button (click)="uploadFile(file)" [disabled]="file.uploading">
+              Upload
+            </button>
+            <button mat-button (click)="removeFile(i)">Cancel</button>
+    
+            <mat-progress-bar *ngIf="file.uploading" mode="determinate" [value]="file.progress"></mat-progress-bar>
+          </div>
+    
+          <div *ngIf="selectedFiles.length > 1">
+            <button mat-button (click)="uploadAll()">Upload All</button>
+            <button mat-button (click)="removeAll()">Cancel All</button>
+          </div>
+        </div>
+    
+        <div class="button-container">
+          <button mat-button (click)="fileInput.click()">Browse Files</button>
+        </div>
+      </div>
+    </div>
+    
+    <h2>Uploaded Files</h2>
+    <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p>
+    <table>
+      <thead>
+        <tr>
+          <th>File Name</th>
+          <th>Link</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let file of fileLinks">
+          <td>{{ file.name }}</td>
+          <td><a [href]="file.link" target="_blank">View</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!--  -->
+<br>
+    <div class="button-container">
+      <div class="back-button">
+        <button mat-button matStepperPrevious class="back-btn">Back</button>
+      </div> 
+      <div class="next-button">
+        <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+    </div>   
+    </div>
+
+      </form>
+    </mat-step>
+
+
+  <!---////////////////////////////////////existing collection details/////////////////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Existing Collections Details</h2>
+        
+        
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Current method of collection</label>
+        <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <mat-select [formControl]="existingCollectionsFormControl" multiple>
+          <mat-option *ngFor="let collection of collectionTypes" [value]="collection.collectionTypeId">{{ collection.description }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="existingCollectionsFormControl.hasError('required')">collection Type is <strong>required</strong></mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+        
+<!-- DebiCheck Inputs -->
+
+        <div *ngIf="existingCollectionsFormControl.value?.includes(1)">
+          <h4>DebiCheck</h4>
+          <mat-form-field class="basicLegalEntityDetails">
+            <mat-label>Submiited Monthly Value R</mat-label>
+            <input matInput type="number" [formControl]="debicheckMonthlyValueFormControl">
+            <mat-error *ngIf="debicheckMonthlyValueFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+          </mat-form-field>    
+
+          <mat-form-field class="basicLegalEntityDetails">
+            <mat-label>Submitted Monthly Volumes</mat-label>
+            <input matInput type="number" [formControl]="debicheckMonthlyVolumeFormControl">
+            <mat-error *ngIf="debicheckMonthlyVolumeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="basicLegalEntityDetails">
+            <mat-label>Success Rate %</mat-label>
+            <input type="number" matInput [formControl]="debicheckSuccessRateFormControl">
+            <mat-error *ngIf="debicheckSuccessRateFormControl.hasError('required')">Success rate is <strong>required</strong></mat-error>
+          </mat-form-field>
+          
+          <mat-form-field class="basicLegalEntityDetails">
+            <mat-label>Existing Dispute %</mat-label>
+            <input matInput type="number" [formControl]="debicheckExistingDisputeFormControl">
+            <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="basicLegalEntityDetails">
+            <mat-label>Average Tracking Days Used</mat-label>
+            <input matInput type="number" [formControl]="debicheckTrackingDaysFormControl">
+            <mat-error *ngIf="debicheckTrackingDaysFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+          </mat-form-field> 
+       </div> 
+
+<!-- EFT -->
+
+       <div *ngIf="existingCollectionsFormControl.value?.includes(2)">
+        <h4>EFT</h4>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Submitted Monthly Value R</mat-label>
+          <input matInput type="number" [formControl]="eftMonthlyValueFormControl">
+          <mat-error *ngIf="eftMonthlyValueFormControl.hasError('required')">
+            Submitted monthly value is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Submitted Monthly Volumes</mat-label>
+          <input matInput type="number" [formControl]="eftMonthlyVolumesFormControl">
+          <mat-error *ngIf="eftMonthlyVolumesFormControl.hasError('required')">
+            Submitted monthly volumes is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Success Rate %</mat-label>
+          <input matInput type="number" [formControl]="eftSuccessRateFormControl">
+          <mat-error *ngIf="eftSuccessRateFormControl.hasError('required')">
+            Success rate is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Existing Dispute %</mat-label>
+          <input matInput type="number" [formControl]="eftExistingDisputeFormControl">
+          <mat-error *ngIf="eftExistingDisputeFormControl.hasError('required')">
+            Existing dispute is <strong>required</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+
+<!-- SEFT -->
+<div *ngIf="existingCollectionsFormControl.value?.includes(3)">
+  <h4>SEFT</h4>
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submitted Monthly Value R</mat-label>
+    <input matInput type="number" [formControl]="seftMonthlyValueFormControl">
+    <mat-error *ngIf="seftMonthlyValueFormControl.hasError('required')">
+      Submitted monthly value is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submitted Monthly Volumes</mat-label>
+    <input matInput type="number" [formControl]="seftMonthlyVolumesFormControl">
+    <mat-error *ngIf="seftMonthlyVolumesFormControl.hasError('required')">
+      Submitted monthly volumes is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Success Rate %</mat-label>
+    <input matInput type="number" [formControl]="seftSuccessRateFormControl">
+    <mat-error *ngIf="seftSuccessRateFormControl.hasError('required')">
+      Success rate is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<!-- Card Payments -->
+<div *ngIf="existingCollectionsFormControl.value?.includes(4)">
+  <h4>Card Payments</h4>
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Debit Card Value Collected Monthly R</mat-label>
+    <input matInput type="number" [formControl]="debitCardValueCollectedMonthlyFormControl">
+    <mat-error *ngIf="debitCardValueCollectedMonthlyFormControl.hasError('required')">
+      Debit card value collected monthly is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Credit Card Value Collected Monthly R</mat-label>
+    <input matInput type="number" [formControl]="creditCardValueCollectedMonthlyFormControl">
+    <mat-error *ngIf="creditCardValueCollectedMonthlyFormControl.hasError('required')">
+      Credit card value collected monthly is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Current Service Provider</mat-label>
+    <input matInput type="text" [formControl]="currentServiceProviderFormControl">
+    <mat-error *ngIf="currentServiceProviderFormControl.hasError('required')">
+      Current service provider is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Current Debit Card Transaction Commission %</mat-label>
+    <input matInput type="number" [formControl]="debitCardTransactionCommissionFormControl">
+    <mat-error *ngIf="debitCardTransactionCommissionFormControl.hasError('required')">
+      Debit card transaction commission is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Current Credit Card Transaction Commission %</mat-label>
+    <input matInput type="number" [formControl]="creditCardTransactionCommissionFormControl">
+    <mat-error *ngIf="creditCardTransactionCommissionFormControl.hasError('required')">
+      Credit card transaction commission is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+</div>
+
+<!-- Cash -->
+
+<div *ngIf="existingCollectionsFormControl.value?.includes(5)">
+  <h4>Cash</h4>
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Collected Monthly Value R</mat-label>
+    <input matInput type="number" [formControl]="collectedMonthlyFormControl">
+    <mat-error *ngIf="collectedMonthlyFormControl.hasError('required')">
+      Collected monthly value is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Collected Monthly Success Rate %</mat-label>
+    <input matInput type="number" [formControl]="collectedMonthlyRateFormControl">
+    <mat-error *ngIf="collectedMonthlyRateFormControl.hasError('required')">
+      Collected monthly success rate is <strong>required</strong>
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Will cash received now be collected electronically?</mat-label>
+          <mat-select [formControl]="collectedElectronicallyFormControl">
+            <mat-option value="yes">Yes</mat-option>
+            <mat-option value="no">No</mat-option>
+          </mat-select>
+          <mat-error *ngIf="collectedElectronicallyFormControl.hasError('required')">This field is <strong>required</strong></mat-error>
+  </mat-form-field> 
+</div>
+
+      <br>
+
+        <div class="button-container">
+          <div class="back-button">
+            <button mat-button matStepperPrevious class="back-btn">Back</button>
+          </div> 
+          <div class="next-button">
+            <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+        </div>   
+        </div>
+        
+      </form>
+    </mat-step>
+
+
+  <!---////////////////////////////////applicant with existing payment provider////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Existing Payment Provider</h2>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="name" class="labels">Do you make use of an existing payment provider?</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <mat-select [formControl]="paymentProviderFormControl">
+            <mat-option value="yes">Yes</mat-option>
+            <mat-option value="no">No</mat-option>
+          </mat-select>
+          <mat-error *ngIf="paymentProviderFormControl.hasError('required')">This field is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+        </div>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="name" class="labels">Reasons for considering an alternative supplier</label>
+      <mat-form-field class="basicLegalEntityDetails">
+      <mat-label></mat-label>
+      <mat-select [formControl]="supplierReasonFormControl">
+        <mat-option *ngFor="let reason of alternativeSupplierReason" [value]="reason.alternativeSupplierReasonsId">{{ reason.description }}</mat-option>
+      </mat-select>
+      <mat-error *ngIf="supplierReasonFormControl.hasError('required')"> A reason is <strong>required</strong></mat-error>
+      </mat-form-field>
+      </div>
+      </div>
+
+      <mat-form-field class="basicLegalEntityDetails" *ngIf="supplierReasonFormControl.value === 'Other'">
+        <mat-label>If other, please specify</mat-label>
+        <input matInput [formControl]="otherReasonFormControl" [errorStateMatcher]="otherReasonMatcher">
+        <mat-error *ngIf="otherReasonFormControl.hasError('required')">A reason is <strong>required</strong></mat-error>
+      </mat-form-field>
+      
+
+      <div class="button-container">
+        <div class="back-button">
+          <button mat-button matStepperPrevious class="back-btn">Back</button>
+        </div> 
+        <div class="next-button">
+          <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+      </div>   
+      </div>
+          
+        </form>
+    </mat-step>
+
+
+  <!---/////////////////////////////////management email addresses/////////////////////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Management Email Addresses</h2>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="name" class="labels">Aet Email Address</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="aetEmailFormControl">
+          <mat-error *ngIf="aetEmailFormControl.hasError('required')">AET email address  is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+       
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Monthly processing limit being reached</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput type ="number" [formControl]="monthlyLimitFormControl">
+          <mat-error *ngIf="monthlyLimitFormControl.hasError('required')">Monthly processing limit is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+        <div class="button-container">
+          <div class="back-button">
+            <button mat-button matStepperPrevious class="back-btn">Back</button>
+          </div> 
+          <div class="next-button">
+            <button mat-button class="create-btn" (click)="nextStep()" *ngIf="stepIndex ===7" >Next</button>
+        </div>   
+        </div>
+
+      </form>
+    </mat-step>
+
+
+  <!---/////////////////////////////////////////////////main account/////////////////////////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Main Account</h2>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="name" class="labels">Bank Name</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+        <mat-select [formControl]="bankNameFormControl">
+          <mat-option *ngFor="let bank of bankName" [value]="bank.bankNameId">{{ bank.description }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="bankNameFormControl.hasError('required')">Bank name is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+        
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Name of Account Holder</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="accountHolderFormControl">
+          <mat-error *ngIf="accountHolderFormControl.hasError('required')">Name of account holder  is <strong>required</strong></mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="form-container">
+      <div class="form-row">
+          <label for="name" class="labels">Branch Name</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="branchNameFormControl">
+          <mat-error *ngIf="branchNameFormControl.hasError('required')">Branch name is <strong>required</strong></mat-error>
+        </mat-form-field> 
+</div>
+</div>
+
+<div class="form-container">
+  <div class="form-row">
+      <label for="name" class="labels">Bank Branch Code</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput type= "number" [formControl]="branchCodeFormControl">
+          <mat-error *ngIf="branchCodeFormControl.hasError('required')">Bank branch code  is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Account Type</label>
+       <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <mat-select [formControl]="accountTypeFormControl">
+          <mat-option *ngFor="let type of accountType" [value]="type.accountTypeId">{{ type.description }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="accountTypeFormControl.hasError('required')">Account type is <strong>required</strong></mat-error>
+      </mat-form-field>
+      </div>
+      </div>
+
+ <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Account Number</label>
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <input matInput type="number" [formControl]="accountNumberFormControl">
+        <mat-error *ngIf="accountNumberFormControl.hasError('required')">Account number is <strong>required</strong></mat-error>
+      </mat-form-field>
+        </div>
+        </div>
+
+
+      <div class="file-upload-wrapper">
+        <div class="checklist-container">
+          <h3>Required Documents(Not older than 3 months)</h3>
+          <ul>
+            <li >
+              <input type="checkbox" /> Account holder ID(Front and Back, Certified)
+            </li>
+            <li >
+              <input type="checkbox" /> Bank Account confirmation(Front and Back, Certified) 
+            </li>
+          </ul>
+        </div>             
+      
+        <!-- upload document -->
+        <div class="file-upload-container" [class.dragover]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+          <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+          
+          <div class="drag-drop-area" *ngIf="!isDragOver">
+            Drag or drop files here
+          </div>
+          <div class="drag-drop-area" *ngIf="isDragOver">
+            Release to upload files
+          </div>
+      
+          <div *ngIf="selectedFiles.length > 0">
+            <div *ngFor="let file of selectedFiles; let i = index">
+              {{ file.file.name }}
+              <button mat-button (click)="uploadFile(file)" [disabled]="file.uploading">
+                Upload
+              </button>
+              <button mat-button (click)="removeFile(i)">Cancel</button>
+      
+              <mat-progress-bar *ngIf="file.uploading" mode="determinate" [value]="file.progress"></mat-progress-bar>
+            </div>
+      
+            <div *ngIf="selectedFiles.length > 1">
+              <button mat-button (click)="uploadAll()">Upload All</button>
+              <button mat-button (click)="removeAll()">Cancel All</button>
+            </div>
+          </div>
+      
+          <div class="button-container">
+            <button mat-button (click)="fileInput.click()">Browse Files</button>
+          </div>
+        </div>
+      </div>
+      
+      <h2>Uploaded Files</h2>
+      <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p>
+      <table>
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of fileLinks">
+            <td>{{ file.name }}</td>
+            <td><a [href]="file.link" target="_blank">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <!--  -->
+      <br>
+
+      <div class="button-container">
+        <div class="back-button">
+          <button mat-button matStepperPrevious class="back-btn">Back</button>
+        </div> 
+        <div class="next-button">
+          <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+      </div>   
+      </div>
+
+      </form>
+    </mat-step>
+
+
+  <!---////////////////////////////////////////////processing code details///////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Processing Code Details</h2>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="name" class="labels">Trading Name</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="processingTradingNameFormControl">
+          <mat-error *ngIf="processingTradingNameFormControl.hasError('required')">Trading name  is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Preferred user abbreviated name/bank inscription on bank statement</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="preferredUserFormControl">
+          <mat-error *ngIf="preferredUserFormControl.hasError('required')">Preferred user abbreviated name  is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Landlord's Name</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="landlordNameFormControl">
+          <mat-error *ngIf="landlordNameFormControl.hasError('required')">Landlord's name is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Landlord's Telephone Number</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput type="number" [formControl]="landlordTelephoneFormControl">
+          <mat-error *ngIf="landlordTelephoneFormControl.hasError('required')">Landlord's telephone number is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Telephone number where the processing code will be implemented</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput type="number" [formControl]="processingTelephoneFormControl">
+          <mat-error *ngIf="processingTelephoneFormControl.hasError('required')">Telephone number where the processing code will be implemented is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Email address where the processing code will be implemented</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="processingEmailFormControl">
+          <mat-error *ngIf="processingEmailFormControl.hasError('required')">Email address where the processing code will be implemented is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+        <p>Contact Details to Be Provided to Debtors and Used in DebiChecks</p>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="name" class="labels">Manager's Name</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="managerNameFormControl">
+          <mat-error *ngIf="managerNameFormControl.hasError('required')">Manager's name is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Manager's Cellphone Number</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput type="number" [formControl]="managerNumberFormControl" maxlength="10">
+          <mat-error *ngIf="managerNumberFormControl.hasError('required')">Manager's cellphone number is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+        
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Name</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="debtorsNameFormControl">
+          <mat-error *ngIf="debtorsNameFormControl.hasError('required')">Name is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Telephone Number</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="debtorsTelephoneFormControl">
+          <mat-error *ngIf="debtorsTelephoneFormControl.hasError('required')">Telephone number is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Email Address</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <input matInput [formControl]="debtorsEmailFormControl">
+          <mat-error *ngIf="debtorsEmailFormControl.hasError('required')">Email address is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+        
+      <div class="form-container">
+        <div class="form-row">
+            <label for="name" class="labels">Name of Debtor Management System</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <mat-select [formControl]="debtorManagementFormControl">
+          <mat-option *ngFor="let debtor of debtorManagementSystem" [value]="debtor.debtorManagementSystemId">{{ debtor.description }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="debtorManagementFormControl.hasError('required')">System is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+        <mat-form-field class="basicLegalEntityDetails" *ngIf="debtorManagementFormControl.value === 'Other'">
+          <mat-label>If other, please specify</mat-label>
+          <input matInput [formControl]="debtorOtherFormControl" [errorStateMatcher]="debtorOtherMatcher">
+          <mat-error *ngIf="debtorOtherFormControl.hasError('required')">A reason is <strong>required</strong></mat-error>
+        </mat-form-field>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="name" class="labels">Must integration be enabled if supported by your administration program supplier</label>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <mat-select [formControl]="integrationFormControl">
+            <mat-option value="yes">Yes</mat-option>
+            <mat-option value="no">No</mat-option>
+          </mat-select>
+          <mat-error *ngIf="integrationFormControl.hasError('required')">This field is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+      </div>
+
+        <div class="file-upload-wrapper">
+          <div class="checklist-container">
+            <h3>Required Documents(Not older than 3 months)</h3>
+            <ul>
+              <li >
+                <input type="checkbox" /> Letterhead(Clear Interior and Exterior, and photos)
+              </li>
+              <li >
+                <input type="checkbox" /> Proof of Address(Vaild Lease Agreement)
+              </li>
+            </ul>
+          </div>             
+        
+          <!-- upload document -->
+          <div class="file-upload-container" [class.dragover]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+            
+            <div class="drag-drop-area" *ngIf="!isDragOver">
+              Drag or drop files here
+            </div>
+            <div class="drag-drop-area" *ngIf="isDragOver">
+              Release to upload files
+            </div>
+        
+            <div *ngIf="selectedFiles.length > 0">
+              <div *ngFor="let file of selectedFiles; let i = index">
+                {{ file.file.name }}
+                <button mat-button (click)="uploadFile(file)" [disabled]="file.uploading">
+                  Upload
+                </button>
+                <button mat-button (click)="removeFile(i)">Cancel</button>
+        
+                <mat-progress-bar *ngIf="file.uploading" mode="determinate" [value]="file.progress"></mat-progress-bar>
+              </div>
+        
+              <div *ngIf="selectedFiles.length > 1">
+                <button mat-button (click)="uploadAll()">Upload All</button>
+                <button mat-button (click)="removeAll()">Cancel All</button>
+              </div>
+            </div>
+        
+            <div class="button-container">
+              <button mat-button (click)="fileInput.click()">Browse Files</button>
+            </div>
+          </div>
+        </div>
+        
+        <h2>Uploaded Files</h2>
+        <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p>
+        <table>
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let file of fileLinks">
+              <td>{{ file.name }}</td>
+              <td><a [href]="file.link" target="_blank">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+<!--  -->
+        <br>
+
+      <div class="button-container">
+        <div class="back-button">
+          <button mat-button matStepperPrevious class="back-btn">Back</button>
+        </div> 
+        <div class="next-button">
+          <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+      </div>   
+      </div>
+
+      </form>
+    </mat-step>
+
+
+  <!---////////////////////////////////////product selection details////////////////////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Product Selection Details</h2>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="name" class="labels">Product Selection</label>
+          <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+          <mat-select [formControl]="productFormControl" multiple>
+            <mat-option *ngFor="let selection of product" [value]="selection.productId">{{ selection.description }}</mat-option>
+          </mat-select>
+          <mat-error *ngIf="productFormControl.hasError('required')">Product is <strong>required</strong></mat-error>
+          </mat-form-field>
+        </div>
+        </div>
+
+        <!-- DebiCheck -->
+         
+        <div *ngIf="productFormControl.value?.includes(1)">
+        <h4>DebiCheck</h4>
+          <mat-form-field class="basicLegalEntityDetails">
+            <mat-label>DebiCheck Authentication Mechanism to be used</mat-label>
+            <mat-select [formControl]="mechanismFormControl">
+            <mat-option *ngFor="let authenticationmechanism of mechanism" [value]="authenticationmechanism.authenticationMechanismsId">{{ authenticationmechanism.description }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="mechanismFormControl.hasError('required')">Mechanism is <strong>required</strong></mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="basicLegalEntityDetails">
+            <mat-label>Total Value to be Submitted Monthly</mat-label>
+            <input matInput type="number" [formControl]="debicheckSubmittedMonthlyFormControl">
+            <mat-error *ngIf="debicheckSubmittedMonthlyFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+          </mat-form-field>    
+
+          <mat-form-field class="basicLegalEntityDetails">
+            <mat-label>Maximum Single Collection Value (Instalment) </mat-label>
+            <input matInput type="number" [formControl]="debicheckMaxiumumValueFormControl">
+            <mat-error *ngIf="debicheckMaxiumumValueFormControl.hasError('required')">Maximum single collection value is <strong>required</strong></mat-error>
+          </mat-form-field>
+
+       <!-- Debit & Credit Card Payments -->
+
+       <div *ngIf="productFormControl.value?.includes(2)">
+        <h4>Debit & Credit card Payment</h4>
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Estimated Total Monthly Value</mat-label>
+          <input matInput type="number" [formControl]="cardEstimatedMonthlyFormControl">
+          <mat-error *ngIf="cardEstimatedMonthlyFormControl.hasError('required')">Estimated Total Monthly Value is <strong>required</strong></mat-error>
+        </mat-form-field>    
+
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Average Transaction Value</mat-label>
+          <input matInput type="number" [formControl]="cardAverageValueFormControl">
+          <mat-error *ngIf="cardAverageValueFormControl.hasError('required')">Average Transaction Value is <strong>required</strong></mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Maximum Single Transactional Value</mat-label>
+          <input type="number" matInput [formControl]="cardTransactionalValueFormControl">
+          <mat-error *ngIf="cardTransactionalValueFormControl.hasError('required')">Maximum Single Transactional Value is <strong>required</strong></mat-error>
+        </mat-form-field>
+        
+        <mat-form-field class="basicLegalEntityDetails">
+          <mat-label>Select the applicable options</mat-label>
+          <mat-select [formControl]="cardOptionFormControl"> 
+            <mat-option value="balanceEnquiry">Balance Equiiry</mat-option>
+            <mat-option value="budgetFacility">Budget Facility</mat-option>
+            <mat-option value="cashbackPOS">Cashback at POS</mat-option>
+          </mat-select>
+          <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+        </mat-form-field>
+
+     <!-- Social Grant EFT Debits -->
+
+     <div *ngIf="productFormControl.value?.includes(3)">
+      <h4>Social Grant EFT Debits</h4>
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label>Submiited Monthly Value R</mat-label>
+        <input matInput type="number" [formControl]="debicheckMonthlyValueFormControl">
+        <mat-error *ngIf="debicheckMonthlyValueFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+      </mat-form-field>    
+
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label>Submitted Monthly Volumes</mat-label>
+        <input matInput type="number" [formControl]="debicheckMonthlyVolumeFormControl">
+        <mat-error *ngIf="debicheckMonthlyVolumeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label>Success Rate %</mat-label>
+        <input type="number" matInput [formControl]="debicheckSuccessRateFormControl">
+        <mat-error *ngIf="debicheckSuccessRateFormControl.hasError('required')">Success rate is <strong>required</strong></mat-error>
+      </mat-form-field>
+      
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label>Existing Dispute %</mat-label>
+        <input matInput type="number" [formControl]="debicheckExistingDisputeFormControl">
+        <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="basicLegalEntityDetails">
+        <mat-label>Average Tracking Days Used</mat-label>
+        <input matInput type="number" [formControl]="debicheckTrackingDaysFormControl">
+        <mat-error *ngIf="debicheckTrackingDaysFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+      </mat-form-field> 
+   </div>
+
+   <!-- EFT Debits -->
+
+   <div *ngIf="productFormControl.value?.includes(4)">
+    <h4>DebiCheck</h4>
+    <mat-form-field class="basicLegalEntityDetails">
+      <mat-label>Submiited Monthly Value R</mat-label>
+      <input matInput type="number" [formControl]="debicheckMonthlyValueFormControl">
+      <mat-error *ngIf="debicheckMonthlyValueFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+    </mat-form-field>    
+
+    <mat-form-field class="basicLegalEntityDetails">
+      <mat-label>Submitted Monthly Volumes</mat-label>
+      <input matInput type="number" [formControl]="debicheckMonthlyVolumeFormControl">
+      <mat-error *ngIf="debicheckMonthlyVolumeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="basicLegalEntityDetails">
+      <mat-label>Success Rate %</mat-label>
+      <input type="number" matInput [formControl]="debicheckSuccessRateFormControl">
+      <mat-error *ngIf="debicheckSuccessRateFormControl.hasError('required')">Success rate is <strong>required</strong></mat-error>
+    </mat-form-field>
+    
+    <mat-form-field class="basicLegalEntityDetails">
+      <mat-label>Existing Dispute %</mat-label>
+      <input matInput type="number" [formControl]="debicheckExistingDisputeFormControl">
+      <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="basicLegalEntityDetails">
+      <mat-label>Average Tracking Days Used</mat-label>
+      <input matInput type="number" [formControl]="debicheckTrackingDaysFormControl">
+      <mat-error *ngIf="debicheckTrackingDaysFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+    </mat-form-field> 
+ </div>
+
+ <!-- AVS/AVS-R -->
+
+ <div *ngIf="productFormControl.value?.includes(5)">
+  <h4>DebiCheck</h4>
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submiited Monthly Value R</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyValueFormControl">
+    <mat-error *ngIf="debicheckMonthlyValueFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+  </mat-form-field>    
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submitted Monthly Volumes</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyVolumeFormControl">
+    <mat-error *ngIf="debicheckMonthlyVolumeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Success Rate %</mat-label>
+    <input type="number" matInput [formControl]="debicheckSuccessRateFormControl">
+    <mat-error *ngIf="debicheckSuccessRateFormControl.hasError('required')">Success rate is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Existing Dispute %</mat-label>
+    <input matInput type="number" [formControl]="debicheckExistingDisputeFormControl">
+    <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Average Tracking Days Used</mat-label>
+    <input matInput type="number" [formControl]="debicheckTrackingDaysFormControl">
+    <mat-error *ngIf="debicheckTrackingDaysFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field> 
+</div>
+
+<!-- eSignatures -->
+
+<div *ngIf="productFormControl.value?.includes(6)">
+  <h4>DebiCheck</h4>
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submiited Monthly Value R</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyValueFormControl">
+    <mat-error *ngIf="debicheckMonthlyValueFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+  </mat-form-field>    
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submitted Monthly Volumes</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyVolumeFormControl">
+    <mat-error *ngIf="debicheckMonthlyVolumeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Success Rate %</mat-label>
+    <input type="number" matInput [formControl]="debicheckSuccessRateFormControl">
+    <mat-error *ngIf="debicheckSuccessRateFormControl.hasError('required')">Success rate is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Existing Dispute %</mat-label>
+    <input matInput type="number" [formControl]="debicheckExistingDisputeFormControl">
+    <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Average Tracking Days Used</mat-label>
+    <input matInput type="number" [formControl]="debicheckTrackingDaysFormControl">
+    <mat-error *ngIf="debicheckTrackingDaysFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field> 
+</div>
+
+<!-- ALLPS Pre-Paid Products -->
+
+<div *ngIf="productFormControl.value?.includes(7)">
+  <h4>DebiCheck</h4>
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submiited Monthly Value R</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyValueFormControl">
+    <mat-error *ngIf="debicheckMonthlyValueFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+  </mat-form-field>    
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submitted Monthly Volumes</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyVolumeFormControl">
+    <mat-error *ngIf="debicheckMonthlyVolumeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Success Rate %</mat-label>
+    <input type="number" matInput [formControl]="debicheckSuccessRateFormControl">
+    <mat-error *ngIf="debicheckSuccessRateFormControl.hasError('required')">Success rate is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Existing Dispute %</mat-label>
+    <input matInput type="number" [formControl]="debicheckExistingDisputeFormControl">
+    <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Average Tracking Days Used</mat-label>
+    <input matInput type="number" [formControl]="debicheckTrackingDaysFormControl">
+    <mat-error *ngIf="debicheckTrackingDaysFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field> 
+</div>
+
+<!-- ALLPS Management Platform -->
+
+<div *ngIf="productFormControl.value?.includes(8)">
+  <h4>DebiCheck</h4>
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submiited Monthly Value R</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyValueFormControl">
+    <mat-error *ngIf="debicheckMonthlyValueFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+  </mat-form-field>    
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submitted Monthly Volumes</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyVolumeFormControl">
+    <mat-error *ngIf="debicheckMonthlyVolumeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Success Rate %</mat-label>
+    <input type="number" matInput [formControl]="debicheckSuccessRateFormControl">
+    <mat-error *ngIf="debicheckSuccessRateFormControl.hasError('required')">Success rate is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Existing Dispute %</mat-label>
+    <input matInput type="number" [formControl]="debicheckExistingDisputeFormControl">
+    <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Average Tracking Days Used</mat-label>
+    <input matInput type="number" [formControl]="debicheckTrackingDaysFormControl">
+    <mat-error *ngIf="debicheckTrackingDaysFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field> 
+</div>
+
+<!-- Device Selection -->
+
+<div *ngIf="productFormControl.value?.includes(9)">
+  <h4>DebiCheck</h4>
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submiited Monthly Value R</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyValueFormControl">
+    <mat-error *ngIf="debicheckMonthlyValueFormControl.hasError('required')">Submitted monthly value is <strong>required</strong></mat-error>
+  </mat-form-field>    
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Submitted Monthly Volumes</mat-label>
+    <input matInput type="number" [formControl]="debicheckMonthlyVolumeFormControl">
+    <mat-error *ngIf="debicheckMonthlyVolumeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Success Rate %</mat-label>
+    <input type="number" matInput [formControl]="debicheckSuccessRateFormControl">
+    <mat-error *ngIf="debicheckSuccessRateFormControl.hasError('required')">Success rate is <strong>required</strong></mat-error>
+  </mat-form-field>
+  
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Existing Dispute %</mat-label>
+    <input matInput type="number" [formControl]="debicheckExistingDisputeFormControl">
+    <mat-error *ngIf="debicheckExistingDisputeFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="basicLegalEntityDetails">
+    <mat-label>Average Tracking Days Used</mat-label>
+    <input matInput type="number" [formControl]="debicheckTrackingDaysFormControl">
+    <mat-error *ngIf="debicheckTrackingDaysFormControl.hasError('required')">Submiited monthly volumes is <strong>required</strong></mat-error>
+  </mat-form-field> 
+</div>
+        
+
+        <div class="button-container">
+          <div class="back-button">
+            <button mat-button matStepperPrevious class="back-btn">Back</button>
+          </div> 
+          <div class="next-button">
+            <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+        </div>   
+      </div>
+
+      </div>
+      </div>
+      </form>
+    </mat-step>
+
+
+  <!---//////////////////////////////////capitec bank AET account//////////////////////////////////////////////////////-->
+
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Capitec Bank AET Account</h2>
+
+        <div class="form-container">
+          <div class="form-row">
+              <label for="Bankname" class="labels">Name of Bank Name </label>
+          <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <mat-select [formControl]="bankNameFormControl">
+          <mat-option *ngFor="let bank of bankName" [value]="bank.bankNameId">{{ bank.description }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="bankNameFormControl.hasError('required')">Bank Name is <strong>required</strong></mat-error>
+        </mat-form-field>
+        </div>
+
+
+
+   <div class="form-row">
+    <label for="nameOfAccoutHolder" class="labels">Name of account holder </label>
+    <mat-form-field class="basicLegalEntityDetails">
+       <mat-label></mat-label>
+        <input matInput  [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter name">
+        <mat-error *ngIf="nameFormControl.hasError('required')">Name is <strong>required</strong></mat-error>
+   </mat-form-field>
+   </div>
+     
+   <div class="form-row">
+    <label for="nameBranch" class="labels">Branch Name</label>
+    <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+          <input matInput id="name" [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter branch name">
+          <mat-error *ngIf="nameFormControl.hasError('required')">Name is <strong>required</strong></mat-error>
+    </mat-form-field>
+    </div>
+
+          <!---->
+          <div class="form-row">
+            <label for="codeBranch" class="labels">Branch Code</label>
+            <mat-form-field class="basicLegalEntityDetails">        
+          <mat-label> </mat-label>
+            <input matInput type="number" [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter branch code">
+            <mat-error *ngIf="nameFormControl.hasError('required')">Code is <strong>required</strong></mat-error>
+            </mat-form-field>
+          </div>
+<!---->
+          
+<div class="form-row">
+  <label for="accountType" class="labels">Account Type</label>
+  <mat-form-field class="basicLegalEntityDetails">        
+            <mat-label></mat-label>
+            <mat-select [formControl]="accountTypeFormControl">
+              <mat-option *ngFor="let type of accountType" [value]="type.accountTypeId">{{ type.description }}</mat-option>
+            </mat-select>
+            <mat-error *ngIf="accountTypeFormControl.hasError('required')">Account Type is <strong>required</strong></mat-error>
+</mat-form-field>
+</div>
+<!---->
+
+<div class="form-row">
+  <label for="accountNumber" class="labels">Account Number</label>
+  <mat-form-field class="basicLegalEntityDetails">        
+            <mat-label></mat-label>
+              <input matInput type="number" [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter account number">
+              <mat-error *ngIf="nameFormControl.hasError('required')">Account number is <strong>required</strong></mat-error>
+            </mat-form-field>
+          </div>
+
+<p>Minimum daily transfer limit R:</p> 
+      <mat-form-field>
+        <mat-label></mat-label>
+        <input type="number" matInput min="0">
+      </mat-form-field> 
+    </div>
+    
+
+      <div class="file-upload-wrapper">
+        <div class="checklist-container">
+          <h3>Required Documents(Not older than 3 months)</h3>
+          <ul>
+            <li >
+              <input type="checkbox" /> Bank Account confirmation
+            </li>
+          </ul>
+        </div>             
+      
+        <!-- upload document -->
+        <div class="file-upload-container" [class.dragover]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+          <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+          
+          <div class="drag-drop-area" *ngIf="!isDragOver">
+            Drag or drop files here
+          </div>
+          <div class="drag-drop-area" *ngIf="isDragOver">
+            Release to upload files
+          </div>
+      
+          <div *ngIf="selectedFiles.length > 0">
+            <div *ngFor="let file of selectedFiles; let i = index">
+              {{ file.file.name }}
+              <button mat-button (click)="uploadFile(file)" [disabled]="file.uploading">
+                Upload
+              </button>
+              <button mat-button (click)="removeFile(i)">Cancel</button>
+      
+              <mat-progress-bar *ngIf="file.uploading" mode="determinate" [value]="file.progress"></mat-progress-bar>
+            </div>
+      
+            <div *ngIf="selectedFiles.length > 1">
+              <button mat-button (click)="uploadAll()">Upload All</button>
+              <button mat-button (click)="removeAll()">Cancel All</button>
+            </div>
+          </div>
+      
+          <div class="button-container">
+            <button mat-button (click)="fileInput.click()">Browse Files</button>
+          </div>
+        </div>
+      </div>
+      
+      <h2>Uploaded Files</h2>
+      <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p>
+      <table>
+        <thead>
+          <tr>
+            <th>File Name</th>
+            <th>Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let file of fileLinks">
+            <td>{{ file.name }}</td>
+            <td><a [href]="file.link" target="_blank">View</a></td>
+          </tr>
+        </tbody>
+      </table>
+
+<!--  -->
+      <br>
+
+
+      <div class="button-container">
+        <div class="back-button">
+          <button mat-button matStepperPrevious class="back-btn">Back</button>
+        </div> 
+        <div class="next-button">
+          <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+      </div>   
+    </div>
+
+      </form>
+    </mat-step>
+
+
+  <!---//////////////////////////////////debit order banking details//////////////////////////////////-->
+ 
+  <mat-step [stepControl]="applicationForm">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+        <ng-template matStepLabel>Step</ng-template>
+        <h2>Debit Order Banking Details</h2>
+
+        <div class="form-container">
+            <div class="form-row">
+              <label for="name" class="labels">Name of Bank Name </label>
+              <mat-form-field class="basicLegalEntityDetails">
+        <mat-label></mat-label>
+        <mat-select [formControl]="bankNameFormControl">
+          <mat-option *ngFor="let bank of bankName" [value]="bank.bankNameId">{{ bank.description }}</mat-option>
+        </mat-select>
+        <mat-error *ngIf="bankNameFormControl.hasError('required')">Bank Name is <strong>required</strong></mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+        <!---->
+        <div class="form-row">
+          <label for="name" class="labels">Name of account holder </label>
+          <mat-form-field class="basicLegalEntityDetails">
+        <mat-label> </mat-label>
+          <input matInput  [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter name">
+          <mat-error *ngIf="nameFormControl.hasError('required')">Name is <strong>required</strong></mat-error>
+       </mat-form-field>
+       </div>
+          <!---->
+
+          <div class="form-row">
+            <label for="name" class="labels">Branch Name</label>
+            <mat-form-field class="basicLegalEntityDetails">
+          <mat-label></mat-label>
+            <input matInput  [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter branch name">
+            <mat-error *ngIf="nameFormControl.hasError('required')">Name is <strong>required</strong></mat-error>
+           </mat-form-field>
+          </div>
+
+            <!---->
+            <div class="form-row">
+              <label for="name" class="labels">Branch Code</label>
+              <mat-form-field class="basicLegalEntityDetails">  
+            <mat-label> </mat-label>
+              <input matInput type="number" [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter branch code">
+              <mat-error *ngIf="nameFormControl.hasError('required')">Code is <strong>required</strong></mat-error>
+            </mat-form-field>
+            </div>
+
+<!---->
+<div class="form-row">
+  <label for="name" class="labels">Account Type</label>
+  <mat-form-field class="basicLegalEntityDetails">  
+              <mat-label></mat-label>
+              <mat-select [formControl]="accountTypeFormControl">
+                <mat-option *ngFor="let type of accountType" [value]="type.accountTypeId">{{ type.description }}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="accountTypeFormControl.hasError('required')">Account Type is <strong>required</strong></mat-error>
+  </mat-form-field>
+</div>
+
+<!---->
+<div class="form-row">
+  <label for="name" class="labels">Account Number</label>
+  <mat-form-field class="basicLegalEntityDetails"> 
+              <mat-label></mat-label>
+              <br>
+                <input matInput type="number" [formControl]="nameFormControl" [errorStateMatcher]="matcher" placeholder="Enter account number">
+                <mat-error *ngIf="nameFormControl.hasError('required')">Account number is <strong>required</strong></mat-error>
+      </mat-form-field>
+    </div>
+
+<p>Minimum daily transfer limit R:</p> 
+<div class="form-row">
+   <mat-form-field class="basicLegalEntityDetails"> 
+          <mat-label></mat-label>
+          <input type="number" matInput min="0">
+    </mat-form-field> 
+  </div>
+        
+        <div class="file-upload-wrapper">
+          <div class="checklist-container">
+            <h3>Required Documents(Not older than 3 months)</h3>
+            <ul>
+              <li >
+                <input type="checkbox" /> Bank Account confirmation
+              </li>
+            </ul>
+          </div>             
+        
+          <!-- upload document -->
+          <div class="file-upload-container" [class.dragover]="isDragOver" (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)">
+            <input type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden />
+            
+            <div class="drag-drop-area" *ngIf="!isDragOver">
+              Drag or drop files here
+            </div>
+            <div class="drag-drop-area" *ngIf="isDragOver">
+              Release to upload files
+            </div>
+        
+            <div *ngIf="selectedFiles.length > 0">
+              <div *ngFor="let file of selectedFiles; let i = index">
+                {{ file.file.name }}
+                <button mat-button (click)="uploadFile(file)" [disabled]="file.uploading">
+                  Upload
+                </button>
+                <button mat-button (click)="removeFile(i)">Cancel</button>
+        
+                <mat-progress-bar *ngIf="file.uploading" mode="determinate" [value]="file.progress"></mat-progress-bar>
+              </div>
+        
+              <div *ngIf="selectedFiles.length > 1">
+                <button mat-button (click)="uploadAll()">Upload All</button>
+                <button mat-button (click)="removeAll()">Cancel All</button>
+              </div>
+            </div>
+        
+            <div class="button-container">
+              <button mat-button (click)="fileInput.click()">Browse Files</button>
+            </div>
+          </div>
+        </div>
+        
+        <h2>Uploaded Files</h2>
+        <p *ngIf="folderLink">Folder: <a [href]="folderLink" target="_blank">{{ folderLink }}</a></p>
+        <table>
+          <thead>
+            <tr>
+              <th>File Name</th>
+              <th>Link</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let file of fileLinks">
+              <td>{{ file.name }}</td>
+              <td><a [href]="file.link" target="_blank">View</a></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!--  -->
+        <br>
+
+      <div class="button-container">
+          <div class="back-button">
+            <button mat-button matStepperPrevious class="back-btn">Back</button>
+          </div> 
+          <div class="next-button">
+            <button mat-button class="create-btn" (click)="saveAndContinue()" >Save and Continue</button>
+          </div>   
+      </div>
+
+      </form>
+    </mat-step>
+
+
+  <!---////////////////////upload document button section/////////////////////////////////////////////////////////////////////////////////-->
+
+    <mat-step>
+      <ng-template matStepLabel>Step</ng-template>
+      <h2>Submission</h2>
+      <p>You are now done! Your application will be sent to a consultant.</p>
+
+        
+        
+      <div class="button-container">
+        <div class="back-button">
+          <button mat-button matStepperPrevious class="back-btn">Back</button>
+        </div> 
+        <div class="next-button">
+          <button mat-button matStepperNext class="create-btn">Submit</button>
+        </div>
+      </div>
+    
+    </mat-step>
+</mat-horizontal-stepper>

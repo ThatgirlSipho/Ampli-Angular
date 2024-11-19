@@ -1,0 +1,6 @@
+[
+    {
+        "title": "forgot-password",
+        "content": "<h3>Forgot Password</h3><p>If you have forgotten your password, this process will guide you through the steps to regain access to your account. Password recovery is designed to be secure and straightforward:</p><ol><li><strong>Enter Registered Email Address:</strong> In the provided field, type the email address that you used when registering your account. Make sure the email is correct to ensure that the reset link is sent to the right place.</li><li><strong>Click 'Send':</strong> Once you have entered your email address, click the 'Send' button. Our system will verify your email and, if it matches our records, an automated email will be sent to you with a reset link.</li><li><strong>Check Your Email:</strong> Go to your email inbox and look for the password reset email. This email will contain a link that, when clicked, will direct you to a page where you can create a new password. This link is only valid for a limited time, so be sure to use it promptly.</li></ol><p>If you do not receive the email within a few minutes, check your spam or junk folder, as automated emails sometimes get filtered incorrectly. If you still do not receive the email, please contact our support team for further assistance.</p>"
+      }
+]

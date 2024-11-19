@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>Help Search</h2>
+<mat-dialog-content>
+  <mat-form-field>
+    <input matInput placeholder="Search help content" [(ngModel)]="searchTerm" (ngModelChange)="onSearchChange($event)">
+  </mat-form-field>
+  <div *ngIf="filteredContent.length > 0; else noResults">
+    <div *ngFor="let item of filteredContent">
+      <h3 [innerHTML]="item.title"></h3>
+      <div [innerHTML]="item.content"></div>
+    </div>
+  </div>
+  <ng-template #noResults>
+    <p>No help content found matching your search.</p>
+  </ng-template>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button (click)="close()">Close</button>
+</mat-dialog-actions>

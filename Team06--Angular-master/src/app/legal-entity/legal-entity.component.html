@@ -1,0 +1,31 @@
+<!-- Background image -->
+<div class="navbar">
+  <button class="back-btn" (click)="goBack()">&#8592;</button>
+  <h1>Start New Application</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;position:absolute;right:85px;top:10px" />
+    </button>
+    <button class="icon-button" mat-raised-button (click)="openAssist('legal-entity')" style="position: absolute; top: 10px; right: 10px; background-color: #020127; color: white;">
+      Help
+    </button>
+  </div>
+</div>
+  
+<div class="page-background"></div>
+
+
+<div class="form-container">
+
+  <form [formGroup]="legalentityform" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="fill">
+      <mat-label>Legal Entity Type</mat-label>
+      <mat-select formControlName="legalEntityId" required>
+        <mat-option *ngFor="let entityType of legalEntityTypes" [value]="entityType.legalEntityTypeId">
+          {{ entityType.description }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button color="primary" type="submit">Submit</button>
+  </form>
+</div>

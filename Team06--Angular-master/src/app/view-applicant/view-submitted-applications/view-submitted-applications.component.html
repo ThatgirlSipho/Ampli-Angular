@@ -1,0 +1,118 @@
+<div class="navbar">
+  <button class="back-btn" (click)="goBack()">&#8592;</button>
+  <h1>View Applications</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;" />
+    </button>
+    <button class="icon-button"  [routerLink]="'/home'">
+      <img src="assets/help.png" alt="Help Icon" />
+    </button>
+  </div>
+</div>
+  
+
+<div class="page-background"></div>
+
+
+
+<div class="applicant-dash">
+
+  <div class="search-sort-bar">
+    <mat-form-field class="search-field">
+      <input matInput placeholder="Search Applications" [(ngModel)]="searchTerm" (ngModelChange)="applyFilters()" />
+    </mat-form-field>
+    <mat-form-field class="filter-field">
+      <mat-select placeholder="Filter by Status" [(ngModel)]="selectedStatus" (ngModelChange)="applyFilters()">
+        <mat-option [value]="null">All Statuses</mat-option>
+        <mat-option *ngFor="let status of applicationStatuses" [value]="status.description">
+          {{ status.description }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  
+  
+  
+
+  
+  <div class="row">
+    <div class="card-container">
+      <mat-card class="card" *ngFor="let application of filteredApplications()">
+        <mat-card-header>
+          <mat-card-title class="card-title" style="text-align: center">{{ application.legalEntityName }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+        
+          <p>Status: <span [ngClass]="getStatusClass(application.applicationStatusDescription)">{{ application.applicationStatusDescription }}</span></p>
+          <p>Application Type: {{ application.legalEntityTypeDescription }}</p>
+          <p>Start Date: {{ application.applicationStartDateTime | date:'medium' }}</p>
+          <mat-progress-bar mode="determinate" [value]="application.progress"></mat-progress-bar>
+          <p style="font-size: 0.75rem;">Completion: {{ application.progress }}%</p>
+        </mat-card-content>
+        <mat-card-footer class="card-footer">
+          Application ID: {{ application.applicationId }}
+        </mat-card-footer>
+        <div class="crud-btns animate">
+          <button class="lklk" type="button" mat-button color="primary" (click)="viewApplication(application.applicationId)">View</button>
+         
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="applicant-dash">
+  <div class="search-sort-bar">
+    <mat-form-field>
+      <input matInput placeholder="Search by anything" [(ngModel)]="searchTerm" (ngModelChange)="sortApplications()" />
+    </mat-form-field>
+    <mat-select placeholder="Filter by Status" [(value)]="selectedStatus" (selectionChange)="sortApplications()">
+      <mat-option *ngFor="let status of applicationStatuses" [value]="status.description">
+        {{ status.description }}
+      </mat-option>
+    </mat-select>
+  </div>
+
+  <h1>Applications</h1>
+  <div class="row">
+    <div class="card-container">
+      <mat-card class="card" *ngFor="let application of filteredApplications()">
+        <mat-card-header>
+          <mat-card-title class="card-title" style="text-align: center">{{ application.legalEntityName }}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <p>Status: {{ application.applicationStatusDescription }}</p>
+          <p>Application Type: {{ application.legalEntityTypeDescription }}</p>
+          <p>Start Date: {{ application.applicationStartDateTime | date:'medium' }}</p>
+        </mat-card-content>
+        <mat-card-footer class="card-footer">
+          Application ID: {{ application.applicationId }}
+        </mat-card-footer>
+        <div class="crud-btns animate">
+          <button type="button" mat-button color="primary" (click)="resumeApplication(application.applicationId)">View</button>
+          <button type="button" mat-button color="warn" (click)="deleteApplication(application.applicationId)">Delete</button>
+        </div>
+      </mat-card>
+    </div>
+  </div>
+</div>
+ -->

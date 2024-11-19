@@ -1,0 +1,32 @@
+
+    <mat-toolbar >
+        <span>List of Applications</span>
+   </mat-toolbar>
+
+   <div class="application-report-container" *ngIf="reportData.length > 0">
+    <h2>Application Report</h2>
+    <table class="report-table">
+      <thead>
+        <tr>
+          <th>Legal Entity Type</th>
+          <th>Number of Applications</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of reportData">
+          <td>{{ row.legalEntityType }}</td>
+          <td>{{ row.applicationCount }}</td>
+        </tr>
+        <tr>
+          <td><strong>Grand Total</strong></td>
+          <td><strong>{{ grandTotal }}</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+    <div class="button-container">
+      <button class="view-button" (click)="generatePDF()">Download PDF</button>
+    </div>
+  </div>
+  

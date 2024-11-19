@@ -1,0 +1,79 @@
+
+<div class="navbar">
+  <button class="back-btn" (click)="goBack()">&#8592;</button>
+  <h1>Create New Applicant</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;" />
+    </button>
+    <button class="icon-button" mat-raised-button (click)="openAssist('createApplicant')" style=" background-color: #020127; color: white;">Help</button>
+     
+  </div>
+</div>
+  
+<div class="page-background"></div>
+  
+
+
+<form id="courseForm" [formGroup]="payload" class="form-container">
+  <div class="form-group">
+    <label for="title">Title</label>
+    <select id="title" formControlName="TitleId" class="form-control">
+      <option *ngFor="let title of titles" [value]="title.titleId">{{ title.description }}</option>
+    </select>
+    <div *ngIf="payload.get('TitleId')?.invalid && (payload.get('TitleId')?.dirty || payload.get('TitleId')?.touched)" class="text-danger">
+      <div *ngIf="payload.get('TitleId')?.errors?.['required']" class="error-message">Title is required.</div>
+    </div>
+  </div>
+
+    <div class="form-group">
+      <label for="applicantName">Name</label>
+      <input formControlName="Name" type="text" class="form-control" id="applicantName" placeholder="Enter your name" required>
+      <div *ngIf="payload.get('Name')?.invalid && (payload.get('Name')?.dirty || payload.get('Name')?.touched)" class="text-danger">
+        <div *ngIf="payload.get('Name')?.errors?.['required']" class="error-message">Name is required.</div>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="applicantDuration">Surname</label>
+      <input formControlName="Surname" type="text" class="form-control" id="applicantDuration" placeholder="Enter your surname" required>
+      <div *ngIf="payload.get('Surname')?.invalid && (payload.get('Surname')?.dirty || payload.get('Surname')?.touched)" class="text-danger">
+        <div *ngIf="payload.get('Surname')?.errors?.['required']" class="error-message">Surname is required.</div>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="applicantEmail">Email</label>
+      <input formControlName="Email" type="email" class="form-control" id="applicantEmail" placeholder="Enter a valid Email" required>
+      <div *ngIf="payload.get('Email')?.invalid && (payload.get('Email')?.dirty || payload.get('Email')?.touched)" class="text-danger">
+        <div *ngIf="payload.get('Email')?.errors?.['required']" class="error-message">Email is required.</div>
+        <div *ngIf="payload.get('Email')?.errors?.['invalidEmail']" class="error-message">Enter a valid email address.</div>
+      </div>
+    </div>
+  
+    <div class="form-group">
+      <label for="applicantCellNumber">CellPhone Number</label>
+      <input formControlName="CellNumber" type="tel" class="form-control" id="applicantCellNumber" placeholder="Enter your cellphone number" required>
+      <div *ngIf="payload.get('CellNumber')?.invalid && (payload.get('CellNumber')?.dirty || payload.get('CellNumber')?.touched)" class="text-danger">
+        <div *ngIf="payload.get('CellNumber')?.errors?.['required']" class="error-message">Cell phone number is required.</div>
+        <div *ngIf="payload.get('CellNumber')?.errors?.['pattern']" class="error-message">Cell phone number must start with 0 and be 10 digits long.</div>
+      </div>
+     <!--  <div *ngIf="CellNumber?.invalid && (CellNumber?.dirty || CellNumber?.touched)" class="text-danger">
+        <div *ngIf="CellNumber?.errors?.['pattern']" class="error-message">CellPhone Number must contain only numbers.</div>
+      </div> -->
+    </div>
+  
+    <div class="form-group">
+      <label for="applicantBusinessName">Business Name</label>
+      <input formControlName="BusinessName" type="text" class="form-control" id="applicantBusinessName" placeholder="Enter your Business Name" required>
+      <div *ngIf="payload.get('BusinessName')?.invalid && (payload.get('BusinessName')?.dirty || payload.get('BusinessName')?.touched)" class="text-danger">
+        <div *ngIf="payload.get('BusinessName')?.errors?.['required']" class="error-message">Business name is required.</div>
+      </div>
+    </div>
+  
+    <div class="form-actions">
+      <button type="submit" (click)="onSubmit()" class="btn btn-primary" id="submitButton">Create</button>
+      <button type="button" class="btn btn-secondary" onclick="window.location.href = '/amplifin-admin';" style="background-color: rgb(196, 103, 103)">Cancel</button>
+    </div>
+  </form>
+  

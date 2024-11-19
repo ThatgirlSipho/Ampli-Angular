@@ -1,0 +1,134 @@
+<mat-sidenav-container class="example-container">
+    <mat-sidenav #sidenav mode="side" class="sidenav">
+      <mat-nav-list>
+        <a mat-list-item routerLink="/main">
+          <mat-icon>home</mat-icon>
+          <span>Home</span>
+        </a>
+       <!-- <a mat-list-item routerLink="/user">
+          <mat-icon>people</mat-icon>
+          <span>User Management</span>
+        </a>  -->
+        <a mat-list-item routerLink="/document">
+          <mat-icon>description</mat-icon> <!-- Changed to 'description' for document icon -->
+          <span>Document Management</span>
+        </a>
+        <a mat-list-item routerLink="/entity">
+          <mat-icon>business</mat-icon>
+          <span>Entity Management</span>
+        </a>
+        <a mat-list-item routerLink="/financial">
+          <mat-icon>credit_card</mat-icon> <!-- Changed to 'credit_card' for financial icon -->
+          <span>Financial Management</span>
+        </a>
+        <a mat-list-item routerLink="/supplier">
+          <mat-icon>shopping_bag</mat-icon> <!-- Changed to 'shopping_bag' for supplier icon -->
+          <span>Supplier Management</span>
+        </a>
+        <a mat-list-item routerLink="/settings">
+          <mat-icon>settings</mat-icon>
+          <span>Settings</span>
+        </a>
+        <a mat-list-item routerLink="/link-delink">
+          <mat-icon>sync-alt</mat-icon>
+          <span>Link & Delink</span>
+        </a>
+      </mat-nav-list>
+    </mat-sidenav>
+  
+    <mat-sidenav-content>
+      <!-- Toolbar with menu button -->
+      <mat-toolbar >
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span>Link & Delink</span>
+      </mat-toolbar>
+      
+<div class="link-delink-container">
+    <h1>Link/Delink Consultant and Applicants</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Consultant</th>
+          <th>Applicants</th>
+          <th>Link/Delink</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <!-- Consultant Dropdown -->
+            <select [(ngModel)]="selectedConsultant">
+              <option *ngFor="let consultant of consultants" [ngValue]="consultant">
+                {{ consultant.name }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <!-- Applicants Multi-Select Dropdown -->
+            <ng-multiselect-dropdown 
+              [placeholder]="'Select Applicants'"
+              [settings]="dropdownSettings"
+              [(ngModel)]="selectedApplicants"
+              [data]="applicants"
+              name="applicants"
+              displayName="name"
+              idField="id"
+              textField="name">
+            </ng-multiselect-dropdown>
+          </td>
+          <td>
+            <!-- Link/Delink Button -->
+            <button (click)="linkOrDelink()" *ngIf="!isLinked">Link</button>
+            <button (click)="linkOrDelink()" *ngIf="isLinked">Delink</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br>
+    <br>
+  
+    <h1>Link/Delink Consultant Manager and Consultants</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Consultant Manager</th>
+          <th>Consultants</th>
+          <th>Link/Delink</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>
+            <!-- Consultant Manager Dropdown -->
+            <select [(ngModel)]="selectedConsultantManager">
+              <option *ngFor="let manager of consultantManagers" [ngValue]="manager">
+                {{ manager.name }}
+              </option>
+            </select>
+          </td>
+          <td>
+            <!-- Consultants Multi-Select Dropdown -->
+            <ng-multiselect-dropdown 
+              [placeholder]="'Select Consultants'"
+              [settings]="dropdownSettings"
+              [(ngModel)]="selectedConsultants"
+              [data]="consultants"
+              name="consultants"
+              displayName="name"
+              idField="id"
+              textField="name">
+            </ng-multiselect-dropdown>
+          </td>
+          <td>
+            <!-- Link/Delink Button -->
+            <button (click)="linkOrDelinkManager()" *ngIf="!isManagerLinked">Link</button>
+            <button (click)="linkOrDelinkManager()" *ngIf="isManagerLinked">Delink</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  

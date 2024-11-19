@@ -1,0 +1,25 @@
+<div class="calendar-container">
+  <div class="calendar-header">
+    <button (click)="previousMonth()">‹</button>
+    <h2>{{ months[currentMonth] }} {{ currentYear }}</h2>
+    <button (click)="nextMonth()">›</button>
+  </div>
+
+  <div class="calendar-grid">
+    <div class="calendar-day" *ngFor="let day of daysOfWeek">{{ day }}</div>
+
+    <div
+      class="calendar-date"
+      *ngFor="let date of getCalendarDays()"
+      [ngClass]="{
+        'today': isToday(date),
+        'client-join': !isToday(date) && isClientJoinDay(date),
+        'holiday': isPublicHoliday(date)
+      }"
+      [attr.title]="getTooltipText(date)"
+    >
+      {{ date.getDate() }}
+      <div class="tooltip">{{ getTooltipText(date) }}</div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,81 @@
+
+<!-- Page content -->
+<div class="container">
+  <!-- Side Navigation Bar -->
+  <nav class="side-nav">
+    <div class="profile-block">
+      <app-profile></app-profile>
+    </div>
+    <ul>
+      <li>
+        <a [routerLink]="'/main'" class="nav-link" title="Administration Management">
+          <mat-icon>account_balance</mat-icon>
+          <h2>Management</h2>
+          <!-- <span class="tooltip">Administration Management</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/new-applicant'" class="nav-link" title="Create a new applicant">
+          <mat-icon>person_add</mat-icon>
+          <h2>Create New Applicant</h2>
+          <!-- <span class="tooltip">Create a new applicant</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/view-applicants'" class="nav-link" title="View applicant details">
+          <mat-icon>visibility</mat-icon>
+          <h2>View Applicants</h2>
+          <!-- <span class="tooltip">View applicant details</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/new-employee'" class="nav-link" title="Create a new employee">
+          <mat-icon>person_add</mat-icon>
+          <h2>Create New Employee</h2>
+          <!-- <span class="tooltip">Create a new employee</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/view-employees'" class="nav-link" title="View employee details">
+          <mat-icon>group</mat-icon>
+          <h2>View Employees</h2>
+          <!-- <span class="tooltip">View employee details</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/consultant-linking-delinking'" class="nav-link" title="Link and Delink Consultants and Applicants">
+          <mat-icon>link</mat-icon>
+          <h2>Link/Delink w/ Applicants</h2>
+          <!-- <span class="tooltip">Link and Delink Consultants and Applicants</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/manager-link-delink'" class="nav-link" title="Link and Delink Managers and Consultants">
+          <mat-icon>link</mat-icon>
+          <h2>Link/Delink w/ Managers</h2>
+          <!-- <span class="tooltip">Link and Delink Managers and Consultants</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/report-management'" class="nav-link" title="View various reports">
+          <mat-icon>insert_chart</mat-icon>
+          <h2>Report</h2>
+          <!-- <span class="tooltip">View various reports</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/Audit'" class="nav-link" title="View Audit Trail">
+          <mat-icon>chrome_reader_mode</mat-icon>
+          <h2>Audit</h2>
+          <!-- <span class="tooltip">View various reports</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/backup'" class="nav-link" title="Backup">
+          <mat-icon>backup</mat-icon>
+          <h2>Backup and Restore</h2>
+          <!-- <span class="tooltip">View various reports</span> -->
+        </a>
+      </li>
+    </ul>
+  </nav>

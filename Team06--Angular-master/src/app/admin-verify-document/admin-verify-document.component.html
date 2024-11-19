@@ -1,0 +1,54 @@
+
+<table mat-table [dataSource]="documents" class="mat-elevation-z8">
+
+    <!-- Document Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Document Name </th>
+      <td mat-cell *matCellDef="let document"> {{document.name}} </td>
+    </ng-container>
+  
+    <!-- Document Link Column -->
+    <!-- <ng-container matColumnDef="link">
+      <th mat-header-cell *matHeaderCellDef> Document </th>
+      <td mat-cell *matCellDef="let document">
+        <a [href]="document.link" target="_blank">View Document</a>
+      </td>
+    </ng-container> -->
+  
+    <!-- Management Approval Column -->
+    <ng-container matColumnDef="amplifinAdminApproved">
+      <th mat-header-cell *matHeaderCellDef> Amplifin Admin Approval </th>
+      <td mat-cell *matCellDef="let document">
+        <mat-checkbox [(ngModel)]="document.amplifinAdminApproved"></mat-checkbox>
+      </td>
+    </ng-container>
+  
+    <tr mat-header-row *matHeaderRowDef="['name', 'amplifinAdminApproved']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['name','amplifinAdminApproved'];"></tr>
+  </table>
+  
+  
+<div style="text-align: right; margin-top: 20px;">
+    <button class="submit-btn" (click)="openModal()">Request additonal documents</button>
+    <button class="submit-btn" >Approve</button>
+    <button class="submit-btn" >Reject</button>
+</div>
+
+    <div id="myModal" class="modal" [ngClass]="{'show': isModalOpen}">
+        <div class="modal-content">
+          <span class="close" (click)="closeModal()">&times;</span>
+          <h1>Select Documents</h1>
+          <div>
+            <div *ngFor="let item of items; let i = index" class="textbox-item">
+              <input type="text" [(ngModel)]="item.name" placeholder="Enter document name">
+              <button *ngIf="i > 0" (click)="removeItem(i)">Remove</button>
+            </div>
+          </div>
+          <div>
+            <button (click)="onCancelClick()">Cancel</button>
+            <button (click)="onOkClick()">Request</button>
+          </div>
+        </div>
+      </div>
+
+      

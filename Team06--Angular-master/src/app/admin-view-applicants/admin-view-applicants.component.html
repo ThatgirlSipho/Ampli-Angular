@@ -1,0 +1,52 @@
+<div class="navbar">
+  <button class="back-btn" (click)="goBack()">&#8592;</button>
+  <h1>View Applicants</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;" />
+    </button>
+
+  </div>
+</div>
+
+<div class="page-background"></div>
+
+<div class="applicant-table-container">
+  <table mat-table [dataSource]="clients" class="mat-elevation-z8">
+    <!-- Name and Surname Column -->
+    <ng-container matColumnDef="nameSurname">
+      <th mat-header-cell *matHeaderCellDef>Name and Surname</th>
+      <td mat-cell *matCellDef="let client">{{ client.name }} {{ client.surname }}</td>
+    </ng-container>
+
+    <!-- Email Column -->
+    <ng-container matColumnDef="email">
+      <th mat-header-cell *matHeaderCellDef>Email Address</th>
+      <td mat-cell *matCellDef="let client">{{ client.email }}</td>
+    </ng-container>
+
+    <!-- Business Name Column -->
+    <ng-container matColumnDef="businessName">
+      <th mat-header-cell *matHeaderCellDef>Business Name</th>
+      <td mat-cell *matCellDef="let client">{{ client.businessName }}</td>
+    </ng-container>
+
+    <!-- Actions Column -->
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>Actions</th>
+      <td mat-cell *matCellDef="let client">
+        <div class="button-group">
+          <button mat-raised-button color="primary" (click)=viewApplication(client.clientId)>View Applications</button>
+          <button mat-raised-button color="primary" (click)="resendRegistrationLink(client.email)">Resend Registration Link</button>
+          <button mat-raised-button color="primary" (click)="deleteClient(client.clientId)">Delete Applicant</button>
+        </div>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+</div>
+
+
+  

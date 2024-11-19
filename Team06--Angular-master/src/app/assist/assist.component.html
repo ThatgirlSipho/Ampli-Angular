@@ -1,0 +1,8 @@
+<div *ngIf="assistContent">
+    <h3>{{ assistContent.title }}</h3>
+    <p>{{ assistContent.content }}</p>
+  </div>
+  <div *ngIf="!assistContent">
+    <p>No assist content available for this section.</p>
+  </div>
+  

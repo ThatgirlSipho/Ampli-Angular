@@ -1,0 +1,19 @@
+    <mat-toolbar >
+        <span>Managerial Graph</span>
+   </mat-toolbar>
+
+   <h2>Report on the number of Applicants linked to Consultants</h2>
+
+   <div class="chart-container" #chartContainer>
+    <canvas baseChart
+            [data]="barChartData"
+            [options]="chartOptions"
+            [plugins]="chartPlugins"
+            chartType="bar">
+    </canvas>
+  </div>
+  
+  <div class="button-container">
+    <button class="view-button" (click)="generatePDF()">Download PDF</button>
+  </div>
+  

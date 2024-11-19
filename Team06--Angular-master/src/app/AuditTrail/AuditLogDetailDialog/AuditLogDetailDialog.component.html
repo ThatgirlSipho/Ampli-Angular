@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Audit Log Details</h1>
+<div mat-dialog-content>
+  <p><strong>Old Values:</strong></p>
+  <pre>{{ data.oldValues | json }}</pre>
+
+  <p><strong>New Values:</strong></p>
+  <pre>{{ data.newValues | json }}</pre>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Close</button>
+</div>

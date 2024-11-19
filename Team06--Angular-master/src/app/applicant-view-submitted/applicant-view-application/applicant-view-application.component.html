@@ -1,0 +1,24 @@
+<!-- view-application.component.html -->
+<div class="navbar">
+    <button class="back-btn" routerLink="/view-application/submitted">&#8592;</button>
+    <h1>Application Details</h1>
+</div>
+
+<div class="container">
+    <div class="application-details card">
+        <h2>Application Details</h2>
+        <div class="details">
+            <h4>Basic Legal Entity Details</h4>
+            <p><strong>Full Name:</strong> {{ applicationDetails.fullName }}</p>
+            <p><strong>Registration Number:</strong> {{ applicationDetails.registrationNumber }}</p>
+            <p><strong>Trading Name:</strong> {{ applicationDetails.tradingName }}</p>
+            <p><strong>Physical Address:</strong> {{ applicationDetails.physicalAddress }}</p>
+            <p><strong>Postal Address:</strong> {{ applicationDetails.postalAddress }}</p>
+            <p><strong>Vat Registered:</strong> {{ applicationDetails.vatRegistered }}</p>
+            <p><strong>Industry Regulatory Body:</strong> {{ applicationDetails.industryRegulatoryBody }}</p>
+            <p><strong>Number of Legal Representatives:</strong> {{ applicationDetails.numberOfLegalRepresentatives }}</p>
+            <p><strong>Full Name:</strong> {{ applicationDetails.legalRepresentativeName }}</p>
+            <p><strong>Income Tax Number:</strong> {{ applicationDetails.incomeTaxNumber }}</p>
+            <p><strong>Identification Type:</strong> {{ applicationDetails.identificationType }}</p>
+        </div>
+    </div>

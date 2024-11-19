@@ -1,0 +1,123 @@
+<div class="navbar">
+  <button class="back-btn" (click)="goBack()">&#8592;</button>
+  <h1>Backup and Restore</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;" />
+    </button>
+    <button class="icon-button" mat-raised-button (click)="openAssist('backup')" style="background-color: #020127; color: white;">
+      Help
+    </button>
+  </div>
+</div>
+
+
+<!-- Background image -->
+<div class="page-background"></div>
+
+
+
+
+<div class="container">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Backup & Restore</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <!-- Backup Button and Last Backup Date -->
+      <div class="backup-section">
+        <p *ngIf="lastBackupDate" class="last-backup-date">
+          Last Backup Date: {{ lastBackupDate | date: 'fullDate' }} at {{ lastBackupDate | date: 'shortTime' }}
+        </p>
+        <button mat-raised-button color="primary" (click)="triggerBackup()" [disabled]="isSubmitting" class="backup-button">
+          {{ isSubmitting ? 'Creating Backup...' : 'Create Backup' }}
+        </button>
+      </div>
+
+      <!-- Schedule Backup Button and Last Scheduled Backup -->
+      <div class="schedule-section">
+        <button mat-raised-button color="accent" (click)="toggleScheduleForm()" class="schedule-button">
+          {{ showScheduleForm ? 'Close Schedule Form' : 'Show Schedule Form' }}
+        </button>
+
+        <div *ngIf="lastScheduledBackup" class="last-scheduled-backup">
+          <h3>Last Scheduled Backup:</h3>
+          <ul>
+            <li><strong>Frequency:</strong> {{ lastScheduledBackup.frequency }}</li>
+            <li><strong>Time:</strong> {{ lastScheduledBackup.time }}</li>
+            <li *ngIf="lastScheduledBackup.dayOfWeek"><strong>Day of the Week:</strong> {{ lastScheduledBackup.dayOfWeek }}</li>
+            <li *ngIf="lastScheduledBackup.dayOfMonth"><strong>Day of the Month:</strong> {{ lastScheduledBackup.dayOfMonth }}</li>
+            <li><strong>Created At:</strong> {{ lastScheduledBackup.createdAt | date: 'short' }}</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Schedule Form -->
+      <form [formGroup]="scheduleForm" (ngSubmit)="scheduleBackup()" *ngIf="showScheduleForm">
+        <h3>Schedule Backup</h3>
+        <!-- Frequency -->
+        <mat-form-field appearance="fill">
+          <mat-label>Frequency</mat-label>
+          <mat-select formControlName="frequency">
+            <mat-option value="daily">Daily</mat-option>
+            <mat-option value="weekly">Weekly</mat-option>
+            <mat-option value="monthly">Monthly</mat-option>
+          </mat-select>
+          <mat-error *ngIf="scheduleForm.get('frequency')?.hasError('required')">
+            Frequency is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Day of the Week -->
+        <mat-form-field *ngIf="scheduleForm.get('frequency')?.value === 'weekly'" appearance="fill">
+          <mat-label>Day of the Week</mat-label>
+          <mat-select formControlName="dayOfWeek">
+            <mat-option value="Monday">Monday</mat-option>
+            <mat-option value="Tuesday">Tuesday</mat-option>
+            <mat-option value="Wednesday">Wednesday</mat-option>
+            <mat-option value="Thursday">Thursday</mat-option>
+            <mat-option value="Friday">Friday</mat-option>
+            <mat-option value="Saturday">Saturday</mat-option>
+            <mat-option value="Sunday">Sunday</mat-option>
+          </mat-select>
+          <mat-error *ngIf="scheduleForm.get('dayOfWeek')?.hasError('required')">
+            Day of the week is required.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Day of the Month -->
+        <mat-form-field *ngIf="scheduleForm.get('frequency')?.value === 'monthly'" appearance="fill">
+          <mat-label>Day of the Month</mat-label>
+          <input matInput formControlName="dayOfMonth" type="number" min="1" max="28" />
+          <mat-error *ngIf="scheduleForm.get('dayOfMonth')?.hasError('required')">
+            Day of the month is required.
+          </mat-error>
+          <mat-error *ngIf="scheduleForm.get('dayOfMonth')?.hasError('min') || scheduleForm.get('dayOfMonth')?.hasError('max')">
+            Day of the month must be between 1 and 28.
+          </mat-error>
+        </mat-form-field>
+
+        <!-- Time -->
+        <mat-form-field appearance="fill">
+          <mat-label>Time</mat-label>
+          <input matInput formControlName="time" type="time" />
+          <mat-error *ngIf="scheduleForm.get('time')?.hasError('required')">
+            Time is required.
+          </mat-error>
+        </mat-form-field>
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="isSubmitting || scheduleForm.invalid">
+          {{ isSubmitting ? 'Scheduling Backup...' : 'Schedule Backup' }}
+        </button>
+      </form>
+    </mat-card-content>
+
+    <!-- Restore Database Button -->
+    <div class="restore-section">
+      <button mat-raised-button color="warn" (click)="triggerRestore()" [disabled]="isSubmitting">
+        {{ isSubmitting ? 'Restoring...' : 'Restore Database' }}
+      </button>
+    </div>
+  </mat-card>
+</div>

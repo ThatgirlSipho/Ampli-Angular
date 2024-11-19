@@ -1,0 +1,228 @@
+<mat-sidenav-container class="example-container">
+  <mat-sidenav #sidenav mode="side" class="sidenav">
+    <mat-nav-list>
+      <a mat-list-item routerLink="/main">
+        <mat-icon>home</mat-icon>
+        <span>Home</span>
+      </a>
+     <!-- <a mat-list-item routerLink="/user">
+        <mat-icon>people</mat-icon>
+        <span>User Management</span>
+      </a>  -->
+      <a mat-list-item routerLink="/document">
+        <mat-icon>description</mat-icon> <!-- Changed to 'description' for document icon -->
+        <span>Document Management</span>
+      </a>
+      <a mat-list-item routerLink="/entity">
+        <mat-icon>business</mat-icon>
+        <span>Entity Management</span>
+      </a>
+      <a mat-list-item routerLink="/financial">
+        <mat-icon>credit_card</mat-icon> <!-- Changed to 'credit_card' for financial icon -->
+        <span>Financial Management</span>
+      </a>
+      <a mat-list-item routerLink="/supplier">
+        <mat-icon>shopping_bag</mat-icon> <!-- Changed to 'shopping_bag' for supplier icon -->
+        <span>Supplier Management</span>
+      </a>
+      <a mat-list-item routerLink="/settings">
+        <mat-icon>settings</mat-icon>
+        <span>Settings</span>
+      </a>
+      <!-- <a mat-list-item routerLink="/link-delink">
+        <mat-icon>sync-alt</mat-icon>
+        <span>Link & Delink</span>
+      </a> -->
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <!-- Toolbar with menu button -->
+    <mat-toolbar >
+      <button mat-icon-button (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span>Settings</span>
+    </mat-toolbar>
+
+    <!-- Main content -->
+
+<div class="container">
+  <button class="back-btn"[routerLink]="'/main'">&#8592;</button>
+  <h1>Settings</h1>
+
+  <!-- List of Documents -->
+  <div class="document-list">
+    <h2>Mechanism</h2>
+    <button class="create-button" (click)="openCreateMechModal()">Create Mechanism</button>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th>Edit</th>
+          <th>Delete</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let mechanism of mechanisms">
+          <td>{{mechanism.authenticationMechanismsId}}</td>
+          <td>{{mechanism.description}}</td>
+          <td>
+            <button class="edit-button" (click)="openEditMechModal(mechanism)">Edit</button>              
+          </td>
+          <td>
+            <button class="delete-button" (click)="confirmDeleteMech(mechanism.authenticationMechanismsId)">Delete</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- ////////////////////////////////////////////// -->
+
+   <!-- List of Debtor Systems -->
+   <div class="document-list">
+      <h2>Debtor Management Systems</h2>
+      <button class="create-button" (click)="openCreateDEBModal()">Create Debtor Management System</button>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let debtorSystems of debtorSystem">
+            <td>{{debtorSystems.debtorManagementSystemId}}</td>
+            <td>{{debtorSystems.description}}</td>
+            <td>
+              <button class="edit-button" (click)="openDEditModal(debtorSystems)">Edit</button>              
+            </td>
+            <td>
+              <button class="delete-button" (click)="confirmDeleteDEB(debtorSystems.debtorManagementSystemId)">Delete</button>
+
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- //////////////////////////////////////////////// -->
+
+     <!-- List of ID types -->
+   <div class="document-list">
+      <h2>Identification Types</h2>
+      <button class="create-button" (click)="openCreateIdModal()">Create Identification Type</button>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let identificationType of identification">
+            <td>{{identificationType.identificationTypeId}}</td>
+            <td>{{identificationType.description}}</td>
+            <td>
+              <button class="edit-button" (click)="openEditIdModal(identificationType)">Edit</button>              
+            </td>
+            <td>
+              <button class="delete-button" (click)="confirmIdDelete(identificationType.identificationTypeId)">Delete</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    
+  <!-- Create Mech Modal -->
+<div *ngIf="showCreateMechModal" class="modal">
+<h2>Create</h2>
+<form [formGroup]="createMechForm" (ngSubmit)="saveNewMech()">
+  <label for="name">Name:</label>
+  <input id="name" type="text" formControlName="name">
+  <button type="submit" class="save-button">Save</button>
+</form>
+<button class="close-button" (click)="closeCreateMechModal()">Close</button>
+</div>
+
+ <!-- Create Debtor Modal -->
+<div *ngIf="showCreateDEBModal" class="modal">
+  <h2>Create</h2>
+  <form [formGroup]="createDEBForm" (ngSubmit)="saveNewDEB()">
+    <label for="name">Name:</label>
+    <input id="name" type="text" formControlName="name">
+    <button type="submit" class="save-button">Save</button>
+  </form>
+  <button class="close-button" (click)="closeCreateDEBModal()">Close</button>
+  </div>
+
+   <!-- Create ID type Modal -->
+   <div *ngIf="showCreateIdModal" class="modal">
+    <h2>Create</h2>
+    <form [formGroup]="createIdForm" (ngSubmit)="saveNewId()">
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name">
+      <button type="submit" class="save-button">Save</button>
+    </form>
+    <button class="close-button" (click)="closeCreateIdModal()">Close</button>
+    </div>
+
+
+  <!-- Edit Document Modal -->
+  <div *ngIf="showEditMechModal" class="modal">
+    <h2>Edit</h2>
+    <form [formGroup]="editMechForm" (ngSubmit)="saveEditMech()">
+      <label for="id">ID:</label>
+      <input id="id" type="text" formControlName="id">
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name">
+     
+      <button type="submit" class="save-button">Save</button>
+    </form>
+    <button class="close-button" (click)="closeEditMechModal()">Close</button>
+  </div>
+
+  <!-- Edit Debtor Modal -->
+  <div *ngIf="showEditDEBModal" class="modal">
+    <h2>Edit Debtor Management System</h2>
+    <form [formGroup]="editDEBForm" (ngSubmit)="saveEditDEB()">
+      <label for="id">ID:</label>
+      <input id="id" type="text" formControlName="id" readonly>
+      
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name">
+  
+      <button type="submit" class="save-button">Save</button>
+    </form>
+  
+    <button class="close-button" (click)="closeEditDEBModal()">Close</button>
+  </div>
+  
+
+  <!-- Edit Id type Modal -->
+  <div *ngIf="showEditIdModal" class="modal">
+    <h2>Edit</h2>
+    <form [formGroup]="editIdForm" (ngSubmit)="saveEditId()">
+      <label for="id">ID:</label>
+      <input id="id" type="text" formControlName="id">
+      <label for="name">Name:</label>
+      <input id="name" type="text" formControlName="name">
+     
+      <button type="submit" class="save-button">Save</button>
+    </form>
+    <button class="close-button" (click)="closeEditIdModal()">Close</button>
+  </div>
+
+
+
+</div>
+
+  </mat-sidenav-content>
+</mat-sidenav-container>

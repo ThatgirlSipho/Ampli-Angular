@@ -1,0 +1,66 @@
+
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" position="end" [opened]="sidebarOpen">
+    <mat-toolbar>
+      <span>Comments</span>
+      <div style="margin-bottom: 100px;"></div>
+      <button mat-icon-button (click)="toggleSidebar()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-toolbar>
+    <div class="comments-container">
+      <mat-card *ngFor="let comment of filteredComments" class="comment-card">
+        <mat-card-header>
+          <div class="profile-container">
+            <img *ngIf="comment.employeeProfilePic" 
+                 [src]="'data:image/jpeg;base64,' + comment.employeeProfilePic" 
+                 alt="{{ comment.employeeName }}" 
+                 class="profile-pic">
+            <img *ngIf="!comment.employeeProfilePic" 
+                 src="assets/profile.jpg" 
+                 alt="Default Profile Picture" 
+                 class="profile-pic">
+            <div class="comment-info">
+              <mat-card-title>{{ comment.employeeName }} {{ comment.employeeSurname }}</mat-card-title>
+              <mat-card-subtitle>{{ comment.datePosted | date:'medium' }}</mat-card-subtitle>
+            </div>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <p class="comment-description">{{ comment.description }}</p>
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+    <div class="add-comment-container"  *ngIf="userRole !== 'Applicant'">
+      <mat-form-field appearance="fill">
+        <mat-label>Add Comment</mat-label>
+        <textarea matInput [(ngModel)]="newCommentText" placeholder="Enter your comment here"></textarea>
+      </mat-form-field>
+      <mat-checkbox [(ngModel)]="clientViewBool">Make visible to Applicant</mat-checkbox>
+      <button mat-raised-button color="primary" (click)="addComment()">Add Comment</button>
+    </div>
+
+  </mat-sidenav>
+</mat-sidenav-container>
+ 
+ 
+
+
+
+
+
+
+
+
+
+ <!--   <mat-form-field appearance="fill">
+      <mat-label>Add Comment</mat-label>
+      <textarea matInput [(ngModel)]="newCommentText" placeholder="Enter your comment here"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>Show to Client</mat-label>
+      <mat-checkbox [(ngModel)]="clientViewBool">Client Viewable</mat-checkbox>
+    </mat-form-field>
+    <button mat-raised-button color="primary" (click)="addComment()">Add Comment</button> -->

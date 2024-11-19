@@ -1,0 +1,15 @@
+<h1 mat-dialog-title>Confirm Deletion</h1>
+<div mat-dialog-content>
+  <p>Are you sure you want to delete the applicant with email: {{ data.email }}?</p>
+  <mat-form-field appearance="fill" style="width: 100%;">
+    <mat-label>Reason for Deletion</mat-label>
+    <input matInput placeholder="Specify reason" formControlName="reason">
+    <mat-error *ngIf="deleteForm.get('reason')?.hasError('required')">
+      Reason is required
+    </mat-error>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onCancel()">Cancel</button>
+  <button mat-button (click)="onConfirm()" [disabled]="deleteForm.invalid">Delete</button>
+</div>

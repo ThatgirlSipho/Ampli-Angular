@@ -1,0 +1,31 @@
+    <mat-toolbar >
+        <span>List of Documents</span>
+   </mat-toolbar>
+
+   <!-- main content -->
+
+   <div>
+    <h2>Required Documents Report</h2>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Document ID</th>
+          <th>Required Documents</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let document of requiredDocuments">
+          <td>{{ document.requiredDocumentId }}</td>
+          <td>{{ document.description }}</td>
+          <td>{{ document.hardcodedDescription }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="button-container">
+    <button class="view-button" (click)="generatePDF()">Download PDF</button>
+  </div>
+  
+  

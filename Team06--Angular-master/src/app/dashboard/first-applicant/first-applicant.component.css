@@ -1,0 +1,116 @@
+/* Styles for the navigation bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #020127;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar h1 {
+  margin: 0;
+}
+
+/* Styles for the back arrow and notification buttons */
+.back-btn, .notification-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Styles for the profile block */
+.profile-block {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-block img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* Styles for the application blocks */
+.application-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 20px;
+}
+
+.application-block {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.application-block img {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+/* Styles for the container */
+.container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.page-background {
+  background-image: url('src/assets/Dasboard_Home.png');
+  background-size: cover;
+  background-position: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  margin-right: 10px; 
+}
+
+.icon-button img {
+  width: 40px; /* Adjust the width as per your design */
+  height: 40px; /* Adjust the height as per your design */
+  display: block; /* Ensures no extra space is taken */
+}
+
+.view-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #020127;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.view-button:hover {
+background-color: #02008b;
+}  
+
+

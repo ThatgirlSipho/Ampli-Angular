@@ -1,0 +1,359 @@
+/* General Container Styling */
+.container {
+    font-family: Arial, sans-serif;
+    margin: 20px;
+  }
+  
+  .mat-toolbar{
+    background-color: #020127;
+    color: white;
+  }
+  /* Header Styling */
+  h1, h2 {
+    color: #333;
+    text-align: center;
+  }
+  
+  /* Document List Styling */
+  .document-list {
+    margin-top: 20px;
+  }
+  
+  .document-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+  }
+  
+  .document-table th, .document-table td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+  }
+  
+  .document-table th {
+    background-color: #f4f4f4;
+  }
+  
+  /* Button Styling */
+  button {
+    padding: 8px 12px;
+    margin: 5px;
+    border: none;
+    cursor: pointer;
+    border-radius: 4px;
+  }
+  
+  .create-button, .save-button {
+    background-color: #4CAF50;
+    color: white;
+  }
+  
+  .edit-button {
+    background-color: #FF9800;
+    color: white;
+  }
+  
+  .delete-button {
+    background-color: #F44336;
+    color: white;
+  }
+  
+  .close-button {
+    background-color: #777;
+    color: white;
+  }
+  
+  /* Modal Styling */
+  .modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    z-index: 1000;
+  }
+  
+  .modal h2 {
+    margin-top: 0;
+  }
+  
+  .modal form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .modal form label {
+    margin: 10px 0 5px;
+  }
+  
+  .modal form input {
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  /* app.component.css */
+  .example-container {
+    height: 100%;
+  }
+  
+  .sidenav {
+    width: 250px;
+  }
+  
+  .mat-toolbar {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+  }
+  
+  .nav-item mat-icon {
+    margin-right: 8px; /* Adjust the value as needed */
+  }
+  
+  .page-background {
+    background-image: url('src/assets/Dasboard_Home.png');
+    background-size: cover;
+    background-position: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1;
+  }
+
+  .sidenav.centered-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centers items vertically */
+    align-items: center;     /* Centers items horizontally */
+  }
+  
+  .mat-nav-list {
+    width: 100%; /* Make sure the list takes the full width of the sidenav */
+  }
+  
+  .mat-list-item {
+    width: auto; /* Keep the items centered */
+  }
+  
+  .mat-list-item .mat-icon {
+    margin-right: 8px; /* Space between the icon and the text */
+  }
+
+  /* Styles for the navigation bar */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  background-color: #020127;
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.navbar h1 {
+  margin: 0;
+}
+
+/* Styles for the back arrow and notification buttons */
+.back-btn, .notification-btn {
+  background-color: transparent;
+  border: none;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+/* Styles for the profile block */
+.profile-block {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin: 20px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.profile-block img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 10px;
+}
+
+/* Styles for the application blocks */
+.application-column {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin: 20px;
+}
+
+.application-block {
+  border: 1px solid #ccc;
+  padding: 20px;
+  margin-bottom: 20px;
+  font-family: Arial, Helvetica, sans-serif;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.application-block img {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+}
+
+/* Styles for the container */
+.container {
+  display: flex;
+  align-items: flex-start;
+}
+
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  margin-right: 10px; 
+}
+
+.icon-button img {
+  width: 40px; /* Adjust the width as per your design */
+  height: 40px; /* Adjust the height as per your design */
+  display: block; /* Ensures no extra space is taken */
+}
+
+.view-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #020127;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.view-button:hover {
+background-color: #02008b;
+}  
+
+.create-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #ecca08;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.create-button:hover {
+background-color: #e9dd36;
+}
+
+.manage-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px 0;
+  font-size: 14px;
+  color: #ffffff;
+  background-color: #7470eb;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.manage-button:hover {
+background-color: #02008b;
+}  
+
+.icon-button {
+  border: none;
+  background: none;
+  padding: 0;
+  margin: 0;
+  margin-right: 10px; 
+}
+
+.icon-button img {
+  width: 40px; /* Adjust the width as per your design */
+  height: 40px; /* Adjust the height as per your design */
+  display: block; /* Ensures no extra space is taken */
+}
+
+ /* Container for the grid */
+.application-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px; /* Space between the cards */
+  padding: 20px;
+}
+
+/* Styling for the cards */
+.application-block.card {
+  background-color: #fff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 30%;
+  max-width: 300px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.application-block.card:hover {
+  transform: translateY(-5px);
+}
+
+/* Image styling */
+.application-block img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+/* Button styling */
+.view-button {
+  background-color: #020127;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  margin-top: 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.view-button:hover {
+  background-color: #0056b3;
+}
+
+/* Heading and paragraph styling */
+.application-block h2 {
+  margin-top: 15px;
+  font-size: 18px;
+  color: #333;
+}
+
+.application-block p {
+  font-size: 14px;
+  color: #666;
+} 

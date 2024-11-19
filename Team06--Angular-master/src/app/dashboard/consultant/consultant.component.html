@@ -1,0 +1,89 @@
+<!-- dashboard.component.html -->
+
+<!-- Navigation bar -->
+<div class="navbar">
+  <button class="back-btn" [routerLink]="'/home'">&#8592;</button>
+  <h1>Dashboard</h1>
+  <div class="icon-buttons">
+    <button mat-icon-button (click)="openVideo()" style="cursor: pointer;" title="Video guide explanation">
+      <mat-icon>video_library</mat-icon>
+    </button>
+    <button mat-icon-button (click)="logout()" style="cursor: pointer;">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</div>
+
+<!-- Video Modal -->
+<div *ngIf="isVideoModalOpen" class="video-modal">
+  <div class="video-modal-content">
+    <span class="close" (click)="closeVideoModal()">&times;</span>
+    <video controls autoplay>
+      <source src="assets/Consultant.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  </div>
+</div>
+
+<!-- Background image -->
+<div class="page-background"></div>
+
+<!-- Page content -->
+<div class="container">
+  <!-- Side Navigation Bar -->
+  <nav class="side-nav">
+    <div class="profile-block">
+      <app-profile></app-profile>
+    </div>
+    <ul>
+      <li>
+        <a [routerLink]="'/new-applicant'" class="nav-link" title="Create a new applicant">
+          <mat-icon>person_add</mat-icon>
+          <h2>Create New Applicant</h2>
+          <!-- <span class="tooltip">Create a new applicant</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/consultant-applicants'" class="nav-link" title="View applicant details">
+          <mat-icon>visibility</mat-icon>
+          <h2>View Applicants</h2>
+          <!-- <span class="tooltip">View applicant details</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/consultant-applications'" class="nav-link" title="View application details">
+          <mat-icon>description</mat-icon>
+          <h2>View Applications</h2>
+          <!-- <span class="tooltip">View application details</span> -->
+        </a>
+      </li>
+      <li>
+        <a [routerLink]="'/report-management'" class="nav-link" title="View various reports">
+          <mat-icon>insert_chart</mat-icon>
+          <h2>Report</h2>
+          <!-- <span class="tooltip">View various reports</span> -->
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+<!-- Content Area: Profile Block + Calendar -->
+<div class="content-area">
+
+
+<!-- Calendar -->
+<div class="calendar-container">
+  <app-calendar></app-calendar>
+</div>
+
+<div class="app-widgets">
+  <app-widgets></app-widgets>
+</div>
+
+<!-- Line Graph -->
+<div class="line-graph-container">
+  <app-line-graph></app-line-graph>
+</div>
+
+</div>
+</div>

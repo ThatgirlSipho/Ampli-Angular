@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Calculate Document Age</h1>
+<div mat-dialog-content>
+  <form [formGroup]="documentDateForm">
+    <mat-form-field>
+      <mat-label>Document Date</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="documentDate">
+      <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+  </form>
+  <p *ngIf="resultMessage">{{ resultMessage }}</p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="calculateAge()">Calculate</button>
+  <button mat-button (click)="closeDialog()">Close</button>
+</div>
+

@@ -1,0 +1,126 @@
+<div class="navbar">
+  <button class="back-btn"  (click)="goBack()">&#8592;</button>
+  <h1 >  Audit Trail</h1>
+  <div class="icon-buttons">
+    <button class="icon-button" >
+      <img src="assets/logout.png" alt="Logout Icon" (click)="logout()" style="cursor: pointer;" />
+    </button>
+    <button class="icon-button" mat-raised-button (click)="openAssist('audit')" style="background-color: #020127; color: white;">
+      Help
+    </button>
+  </div>
+</div>
+
+<div class="page-background"></div>
+
+<div class="container">
+ 
+  <div class="search-section" fxLayout="row wrap" fxLayoutGap="16px">
+    <mat-form-field appearance="fill" fxFlex="100%" fxFlex.sm="48%" fxFlex.xs="100%">
+      <mat-label>UserName or UserId</mat-label>
+      <input matInput [(ngModel)]="searchParams.userInput" placeholder="Search by User ID">
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" fxFlex="100%" fxFlex.sm="48%" fxFlex.xs="100%">
+      <mat-label>Table Name</mat-label>
+      <input matInput [(ngModel)]="searchParams.tableName" placeholder="Search by Table Name">
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" fxFlex="100%" fxFlex.sm="48%" fxFlex.xs="100%">
+      <mat-label>Action</mat-label>
+      <input matInput [(ngModel)]="searchParams.action" placeholder="Search by Action">
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" fxFlex="100%" fxFlex.sm="48%" fxFlex.xs="100%">
+      <mat-label>From Date</mat-label>
+      <input matInput [(ngModel)]="searchParams.fromDate" [matDatepicker]="picker1" placeholder="Select From Date">
+      <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+      <mat-datepicker #picker1></mat-datepicker>
+    </mat-form-field>
+  
+    <mat-form-field appearance="fill" fxFlex="100%" fxFlex.sm="48%" fxFlex.xs="100%">
+      <mat-label>To Date</mat-label>
+      <input matInput [(ngModel)]="searchParams.toDate" [matDatepicker]="picker2" placeholder="Select To Date">
+      <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+      <mat-datepicker #picker2></mat-datepicker>
+    </mat-form-field>
+  
+    <button mat-raised-button color="primary" (click)="searchAuditLogs()">Search</button>
+  </div>
+  
+
+
+
+  <mat-table [dataSource]="auditLogs" class="mat-elevation-z8">
+
+    
+    <!-- User ID Column -->
+    <ng-container matColumnDef="userId">
+      <mat-header-cell *matHeaderCellDef> User ID </mat-header-cell>
+      <mat-cell *matCellDef="let log"> {{log.userId}} </mat-cell>
+    </ng-container>
+  
+    <!-- Table Name Column -->
+    <ng-container matColumnDef="tableName">
+      <mat-header-cell *matHeaderCellDef> Table Name </mat-header-cell>
+      <mat-cell *matCellDef="let log"> {{log.tableName}} </mat-cell>
+    </ng-container>
+  
+    <!-- Action Column -->
+    <ng-container matColumnDef="action">
+      <mat-header-cell *matHeaderCellDef> Action </mat-header-cell>
+      <mat-cell *matCellDef="let log"> {{log.action}} </mat-cell>
+    </ng-container>
+  
+    <!-- DateTime Column -->
+    <ng-container matColumnDef="dateTime">
+      <mat-header-cell *matHeaderCellDef> DateTime </mat-header-cell>
+      <mat-cell *matCellDef="let log"> {{log.dateTime | date:'short'}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="oldValues">
+      <mat-header-cell *matHeaderCellDef> Old Values </mat-header-cell>
+      <mat-cell *matCellDef="let log"> {{log.oldValues}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="newValues">
+      <mat-header-cell *matHeaderCellDef> New Values </mat-header-cell>
+      <mat-cell *matCellDef="let log"> {{log.newValues}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="expand">
+      <mat-header-cell *matHeaderCellDef> Expand to see Changes </mat-header-cell>
+      <mat-cell *matCellDef="let log">
+        <button mat-button (click)="openDetailDialog(log)">View Details</button>
+      </mat-cell>
+    </ng-container>
+
+    <!-- Define Header and Rows -->
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" class="mat-row"></mat-row>
+  
+  </mat-table>
+  
+
+
+
+
+  
+  
+  
+  <mat-paginator [length]="totalRecords"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 25, 50]"
+                 (page)="onPageChange($event)">
+  </mat-paginator>
+  
+
+
+
+  
+  
+
+
+  
+  
+</div>
